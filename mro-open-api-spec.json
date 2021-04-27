@@ -1,0 +1,198 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "contact" : {
+      "email" : "chuck.marco@prattwhitney.com",
+      "name" : "Chuck Marco",
+      "url" : "https://chuck-nbc.fandom.com/wiki/Marco"
+    },
+    "description" : "RESTful API for Pratt & Whitney DOME Application.",
+    "title" : "Digital Overhaul Management of Engines",
+    "version" : "1.0"
+  },
+  "externalDocs" : {
+    "description" : "Project SharePoint"
+  },
+  "servers" : [ {
+    "description" : "DBDS Devlelopment",
+    "url" : "http://192.168.3.171:81/dome",
+    "variables" : { }
+  }, {
+    "description" : "DBDS Stage",
+    "url" : "http://192.168.3.171:82/dome",
+    "variables" : { }
+  }, {
+    "description" : "P&W Stage",
+    "url" : "https://dome-ui-test.prattwhitney.com/dome",
+    "variables" : { }
+  } ],
+  "security" : [ {
+    "bearerAuth" : [ ]
+  } ],
+  "tags" : [ {
+    "description" : "MRO (maintenance, repair and operations) Collaboration API.",
+    "name" : "MRO Collab"
+  } ],
+  "paths" : {
+    "/v1/mro-collab/workorder" : {
+      "post" : {
+        "description" : "Returns Work In Progress.",
+        "operationId" : "getMroInfo",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MroWorkOrderRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "examples" : {
+                  "Request validation example 1." : {
+                    "description" : "Request validation example 1.",
+                    "summary" : "ESN is null.",
+                    "value" : {
+                      "status" : "BAD_REQUEST",
+                      "statusCode" : 400,
+                      "reason" : "Bad Request",
+                      "message" : "Validation failed for argument [0] in public org.springframework.http.ResponseEntity<java.lang.String> com.pw.dome.mro.collab.workorder.MroWorkOrderController.getMroInfo(com.pw.dome.mro.collab.workorder.MroWorkOrderRequest) with 2 errors: [Field error in object 'mroWorkOrderRequest' on field 'mroWorkOrder': rejected value [01234567890]; codes [Length.mroWorkOrderRequest.mroWorkOrder,Length.mroWorkOrder,Length.java.lang.String,Length]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [mroWorkOrderRequest.mroWorkOrder,mroWorkOrder]; arguments []; default message [mroWorkOrder],10,0]; default message [length must be between 0 and 10]] [Field error in object 'mroWorkOrderRequest' on field 'esn': rejected value [null]; codes [NotBlank.mroWorkOrderRequest.esn,NotBlank.esn,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [mroWorkOrderRequest.esn,esn]; arguments []; default message [esn]]; default message [The field may not be blank.]]",
+                      "errors" : [ "mroWorkOrder: length must be between 0 and 10", "esn: The field may not be blank." ]
+                    }
+                  },
+                  "Request validation example 2." : {
+                    "description" : "Request validation example 2.",
+                    "summary" : "MRO work order too long.",
+                    "value" : {
+                      "status" : "BAD_REQUEST",
+                      "statusCode" : 400,
+                      "reason" : "Bad Request",
+                      "message" : "Validation failed for argument [0] in public org.springframework.http.ResponseEntity<java.lang.String> com.pw.dome.mro.collab.workorder.MroWorkOrderController.getMroInfo(com.pw.dome.mro.collab.workorder.MroWorkOrderRequest): [Field error in object 'mroWorkOrderRequest' on field 'mroWorkOrder': rejected value [01234567890]; codes [Length.mroWorkOrderRequest.mroWorkOrder,Length.mroWorkOrder,Length.java.lang.String,Length]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [mroWorkOrderRequest.mroWorkOrder,mroWorkOrder]; arguments []; default message [mroWorkOrder],10,0]; default message [length must be between 0 and 10]]",
+                      "errors" : [ "mroWorkOrder: length must be between 0 and 10" ]
+                    }
+                  }
+                },
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "404" : {
+            "content" : {
+              "application/json" : {
+                "examples" : {
+                  "No match example 1." : {
+                    "description" : "No match example 1.",
+                    "summary" : "ESN doesn't match.",
+                    "value" : {
+                      "status" : "NOT_FOUND",
+                      "statusCode" : 404,
+                      "reason" : "Not Found",
+                      "message" : "No matching records to update found. ESN='72382111' has 0 match(es). EventId='4043679' has 1 match(es). ShopCode='ESA' has 3737 match(es). ",
+                      "errors" : [ "No matching records to update found. ESN='72382111' has 0 match(es). EventId='4043679' has 1 match(es). ShopCode='ESA' has 3737 match(es). " ]
+                    }
+                  },
+                  "No match example 2." : {
+                    "description" : "No match example 2.",
+                    "summary" : "Shop Code doesn't match.",
+                    "value" : {
+                      "status" : "NOT_FOUND",
+                      "statusCode" : 404,
+                      "reason" : "Not Found",
+                      "message" : "No matching records to update found. ESN='723821' has 1 match(es). EventId='4043679' has 1 match(es). ShopCode='ESAAA' has 0 match(es). ",
+                      "errors" : [ "No matching records to update found. ESN='723821' has 1 match(es). EventId='4043679' has 1 match(es). ShopCode='ESAAA' has 0 match(es). " ]
+                    }
+                  }
+                },
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description" : "Not Found"
+          }
+        },
+        "tags" : [ "MRO Collab" ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ErrorResponse" : {
+        "type" : "object",
+        "description" : "Error response schema.",
+        "properties" : {
+          "errors" : {
+            "type" : "array",
+            "description" : "Chain of application error messages.",
+            "items" : {
+              "type" : "string",
+              "description" : "Chain of application error messages."
+            }
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Application error message."
+          },
+          "reason" : {
+            "type" : "string",
+            "description" : "The HttpStatus Reason Phrase  (e.g., NOT FOUND)."
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "The HttpStatus name (e.g., NOT_FOUND)."
+          },
+          "statusCode" : {
+            "type" : "integer",
+            "description" : "The HttpStatus value  (e.g., 404).",
+            "format" : "int32"
+          }
+        }
+      },
+      "MroWorkOrderRequest" : {
+        "type" : "object",
+        "description" : "Update work order schema.",
+        "properties" : {
+          "esn" : {
+            "type" : "string"
+          },
+          "eventId" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "mroShopCode" : {
+            "type" : "string"
+          },
+          "mroWorkOrder" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "esn", "eventId", "mroShopCode", "mroWorkOrder" ]
+      }
+    },
+    "securitySchemes" : {
+      "bearerAuth" : {
+        "bearerFormat" : "jwt",
+        "description" : "JWT Bearer Authorization.",
+        "scheme" : "bearer",
+        "type" : "http"
+      }
+    }
+  }
+}
