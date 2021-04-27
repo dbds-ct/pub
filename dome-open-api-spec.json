@@ -593,6 +593,217 @@
         "tags" : [ "maintenance-controller" ]
       }
     },
+    "/v1/admin/operatorCenterMatrix" : {
+      "delete" : {
+        "description" : "Delete operator centers matrix information.",
+        "operationId" : "deleteOperatorCenterMatrix",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CustomerCenterMatrix"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CustomerCenterMatrixResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "401" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description" : "Unauthorized"
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description" : "Internal Server Error"
+          }
+        },
+        "tags" : [ "Administration" ]
+      },
+      "get" : {
+        "description" : "Get operator centers matrix information.",
+        "operationId" : "getOperatorCenterMatrix",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OperatorCentersResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "401" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description" : "Unauthorized"
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description" : "Internal Server Error"
+          }
+        },
+        "tags" : [ "Administration" ]
+      },
+      "put" : {
+        "description" : "Add operator centers matrix information.",
+        "operationId" : "addOperatorCenterMatrix",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CustomerCenterMatrix"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CustomerCenterMatrixResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "401" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description" : "Unauthorized"
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description" : "Internal Server Error"
+          }
+        },
+        "tags" : [ "Administration" ]
+      }
+    },
+    "/v1/admin/operatorCenters" : {
+      "get" : {
+        "description" : "Get operator centers information.",
+        "operationId" : "getOperatorCenters",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OperatorCentersResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "401" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description" : "Unauthorized"
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description" : "Internal Server Error"
+          }
+        },
+        "tags" : [ "Administration" ]
+      }
+    },
+    "/v1/admin/operators" : {
+      "get" : {
+        "description" : "Get operators information.",
+        "operationId" : "getOperators",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OperatorResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "401" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description" : "Unauthorized"
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description" : "Internal Server Error"
+          }
+        },
+        "tags" : [ "Administration" ]
+      }
+    },
     "/v1/admin/users" : {
       "get" : {
         "description" : "Gets all users or a single user if the user-email query param is set.",
@@ -3257,14 +3468,14 @@
           "content" : {
             "application/json" : {
               "schema" : {
+                "required" : [ "file" ],
                 "type" : "object",
                 "properties" : {
                   "file" : {
                     "type" : "string",
                     "format" : "binary"
                   }
-                },
-                "required" : [ "file" ]
+                }
               }
             }
           }
@@ -3643,7 +3854,92 @@
             "description" : "OK"
           }
         },
-        "tags" : [ "smi-controller" ]
+        "tags" : [ "Work In Progress" ]
+      }
+    },
+    "/v1/wip/smi/dropdown" : {
+      "put" : {
+        "description" : "Updates Smi Dropdown values for given input fields.",
+        "operationId" : "updateSmiDropdownDescription",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SmiDropdownUpdateRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SmiDropdownResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "404" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "description" : "Not Found"
+          }
+        },
+        "tags" : [ "Work In Progress" ]
+      }
+    },
+    "/v1/wip/smi/dropdown/{smi-field}/{eng-group-id}" : {
+      "get" : {
+        "description" : "Fetches Smi Dropdown values for given smifield and engineGroupID.",
+        "operationId" : "getSmiDropdownResponse",
+        "parameters" : [ {
+          "description" : "SMI Field",
+          "in" : "path",
+          "name" : "smi-field",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "description" : "Engine Group ID",
+          "in" : "path",
+          "name" : "eng-group-id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SmiDropdownResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "404" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "description" : "Not Found"
+          }
+        },
+        "tags" : [ "Work In Progress" ]
       }
     },
     "/v1/wip/smi/{engine-id}/{eng-group-id}" : {
@@ -3677,7 +3973,7 @@
             "description" : "OK"
           }
         },
-        "tags" : [ "smi-controller" ]
+        "tags" : [ "Work In Progress" ]
       }
     },
     "/v1/wip/smi/{smi-id}" : {
@@ -3704,7 +4000,7 @@
             "description" : "OK"
           }
         },
-        "tags" : [ "smi-controller" ]
+        "tags" : [ "Work In Progress" ]
       }
     },
     "/v1/wip/subcategories/{category}" : {
@@ -4546,6 +4842,38 @@
           },
           "shortName" : {
             "type" : "string"
+          }
+        }
+      },
+      "CustomerCenterMatrix" : {
+        "required" : [ "customerId", "engineCenterId", "engineTypeId" ],
+        "type" : "object",
+        "properties" : {
+          "customerId" : {
+            "maxLength" : 6,
+            "minLength" : 0,
+            "type" : "string"
+          },
+          "engineCenterId" : {
+            "maxLength" : 10,
+            "minLength" : 0,
+            "type" : "string"
+          },
+          "engineTypeId" : {
+            "maxLength" : 10,
+            "minLength" : 0,
+            "type" : "string"
+          }
+        }
+      },
+      "CustomerCenterMatrixResponse" : {
+        "type" : "object",
+        "properties" : {
+          "customerCenterMatrixList" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CustomerCenterMatrix"
+            }
           }
         }
       },
@@ -6277,6 +6605,65 @@
           }
         }
       },
+      "Operator" : {
+        "type" : "object",
+        "properties" : {
+          "customerId" : {
+            "type" : "string"
+          },
+          "customerName" : {
+            "type" : "string"
+          },
+          "customerShortName" : {
+            "type" : "string"
+          },
+          "engineTypeId" : {
+            "type" : "string"
+          },
+          "engineTypeName" : {
+            "type" : "string"
+          }
+        }
+      },
+      "OperatorCentersResponse" : {
+        "type" : "object",
+        "properties" : {
+          "engineCenters" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/OperatorEngineCenter"
+            }
+          }
+        }
+      },
+      "OperatorEngineCenter" : {
+        "type" : "object",
+        "properties" : {
+          "engineCenterId" : {
+            "type" : "string"
+          },
+          "engineCenterName" : {
+            "type" : "string"
+          },
+          "engineTypeId" : {
+            "type" : "string"
+          },
+          "engineTypeName" : {
+            "type" : "string"
+          }
+        }
+      },
+      "OperatorResponse" : {
+        "type" : "object",
+        "properties" : {
+          "operators" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Operator"
+            }
+          }
+        }
+      },
       "PacingItem" : {
         "required" : [ "category", "engineId", "engineSN" ],
         "type" : "object",
@@ -6458,6 +6845,57 @@
           }
         }
       },
+      "SmiDropdownEntity" : {
+        "type" : "object",
+        "properties" : {
+          "engGroupId" : {
+            "type" : "string"
+          },
+          "smiField" : {
+            "type" : "string"
+          },
+          "smiValue" : {
+            "type" : "string"
+          }
+        }
+      },
+      "SmiDropdownResponse" : {
+        "type" : "object",
+        "properties" : {
+          "smiDropdowns" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/SmiDropdownEntity"
+            }
+          }
+        }
+      },
+      "SmiDropdownUpdateRequest" : {
+        "required" : [ "engGroupId", "smiField", "smiUpdatedValue", "smiValue" ],
+        "type" : "object",
+        "properties" : {
+          "engGroupId" : {
+            "maxLength" : 10,
+            "minLength" : 1,
+            "type" : "string"
+          },
+          "smiField" : {
+            "maxLength" : 20,
+            "minLength" : 1,
+            "type" : "string"
+          },
+          "smiUpdatedValue" : {
+            "maxLength" : 50,
+            "minLength" : 1,
+            "type" : "string"
+          },
+          "smiValue" : {
+            "maxLength" : 50,
+            "minLength" : 1,
+            "type" : "string"
+          }
+        }
+      },
       "SmiResponse" : {
         "required" : [ "smiRevisions" ],
         "type" : "object",
@@ -6484,6 +6922,11 @@
         "required" : [ "smiDesc", "smiRev", "smiRevDate" ],
         "type" : "object",
         "properties" : {
+          "comments" : {
+            "maxLength" : 250,
+            "minLength" : 1,
+            "type" : "string"
+          },
           "moduleGroups" : {
             "type" : "array",
             "items" : {
