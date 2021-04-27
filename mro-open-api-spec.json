@@ -63,8 +63,8 @@
             "content" : {
               "application/json" : {
                 "examples" : {
-                  "Request validation example 1." : {
-                    "description" : "Request validation example 1.",
+                  "Error response when request ESN is null." : {
+                    "description" : "Error response when request ESN is null.",
                     "summary" : "ESN is null.",
                     "value" : {
                       "status" : "BAD_REQUEST",
@@ -74,9 +74,9 @@
                       "errors" : [ "mroWorkOrder: length must be between 0 and 10", "esn: The field may not be blank." ]
                     }
                   },
-                  "Request validation example 2." : {
-                    "description" : "Request validation example 2.",
-                    "summary" : "MRO work order too long.",
+                  "Error response when request field length is exceeded." : {
+                    "description" : "Error response when request field length is exceeded.",
+                    "summary" : "MRO work order length exceeds 10.",
                     "value" : {
                       "status" : "BAD_REQUEST",
                       "statusCode" : 400,
@@ -97,8 +97,8 @@
             "content" : {
               "application/json" : {
                 "examples" : {
-                  "No match example 1." : {
-                    "description" : "No match example 1.",
+                  "Error response when request ESN not matched." : {
+                    "description" : "Error response when request ESN not matched.",
                     "summary" : "ESN doesn't match.",
                     "value" : {
                       "status" : "NOT_FOUND",
@@ -108,9 +108,9 @@
                       "errors" : [ "No matching records to update found. ESN='72382111' has 0 match(es). EventId='4043679' has 1 match(es). ShopCode='ESA' has 3737 match(es). " ]
                     }
                   },
-                  "No match example 2." : {
-                    "description" : "No match example 2.",
-                    "summary" : "Shop Code doesn't match.",
+                  "Error response when request ShopCode not matched." : {
+                    "description" : "Error response when request ShopCode not matched.",
+                    "summary" : "ShopCode doesn't match.",
                     "value" : {
                       "status" : "NOT_FOUND",
                       "statusCode" : 404,
