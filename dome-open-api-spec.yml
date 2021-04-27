@@ -1,0 +1,5116 @@
+openapi: 3.0.1
+info:
+  contact:
+    email: chuck.marco@prattwhitney.com
+    name: Chuck Marco
+    url: https://chuck-nbc.fandom.com/wiki/Marco
+  description: RESTful API for Pratt & Whitney DOME Application.
+  title: Digital Overhaul Management of Engines
+  version: "1.0"
+externalDocs:
+  description: Project SharePoint
+servers:
+- description: DBDS Devlelopment
+  url: http://192.168.3.171:81/dome
+  variables: {}
+- description: DBDS Stage
+  url: http://192.168.3.171:82/dome
+  variables: {}
+- description: P&W Stage
+  url: https://dome-ui-test.prattwhitney.com/dome
+  variables: {}
+security:
+- bearerAuth: []
+tags:
+- description: "MRO (maintenance, repair and operations) Collaboration API."
+  name: MRO Collab
+paths:
+  /v1/actvity:
+    get:
+      operationId: getActivities
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Activity'
+          description: OK
+      tags:
+      - activity-controller
+    post:
+      operationId: addActivity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Activity'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity'
+          description: OK
+      tags:
+      - activity-controller
+  /v1/admin/accounts:
+    get:
+      description: Gets account management information.
+      operationId: getAccountManagementResponse
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountManagementResponse'
+          description: OK
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal Server Error
+      tags:
+      - Administration
+  /v1/admin/customers:
+    put:
+      operationId: updateCustomerStatus
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerListResponse'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+          description: OK
+      tags:
+      - customer-maintenance-controller
+  /v1/admin/customers/engineTypes/{customerId}:
+    get:
+      operationId: getEngineTypes_2
+      parameters:
+      - in: path
+        name: customerId
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EngineTypesResponse'
+          description: OK
+      tags:
+      - customer-maintenance-controller
+    put:
+      operationId: save
+      parameters:
+      - in: path
+        name: customerId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EngineTypesResponse'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EngineTypesResponse'
+          description: OK
+      tags:
+      - customer-maintenance-controller
+  /v1/admin/engines/management:
+    get:
+      operationId: getActiveEngineCenters
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EngineCentersResponse'
+          description: OK
+      tags:
+      - maintenance-controller
+    post:
+      operationId: save_3
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EngineCentersResponse'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EngineCentersResponse'
+          description: OK
+      tags:
+      - maintenance-controller
+  /v1/admin/engines/management/{engine-center-id}:
+    get:
+      operationId: getEngineTypes_1
+      parameters:
+      - in: path
+        name: engine-center-id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EngineTypesResponse'
+          description: OK
+      tags:
+      - maintenance-controller
+    post:
+      operationId: save_4
+      parameters:
+      - in: path
+        name: engine-center-id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EngineTypesResponse'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EngineTypesResponse'
+          description: OK
+      tags:
+      - maintenance-controller
+  /v1/admin/engines/management/{engine-center-id}/{engine-type-id}:
+    delete:
+      operationId: deleteType
+      parameters:
+      - in: path
+        name: engine-center-id
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: engine-type-id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: OK
+      tags:
+      - maintenance-controller
+    get:
+      operationId: getEngineGroups_1
+      parameters:
+      - in: path
+        name: engine-center-id
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: engine-type-id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EngineGroupsResponse'
+          description: OK
+      tags:
+      - maintenance-controller
+    post:
+      operationId: save_5
+      parameters:
+      - in: path
+        name: engine-center-id
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: engine-type-id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EngineGroupsResponse'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EngineGroupsResponse'
+          description: OK
+      tags:
+      - maintenance-controller
+  /v1/admin/engines/management/{engine-center-id}/{engine-type-id}/{engine-group-id}:
+    delete:
+      operationId: deleteGroup
+      parameters:
+      - in: path
+        name: engine-center-id
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: engine-type-id
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: engine-group-id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: OK
+      tags:
+      - maintenance-controller
+    get:
+      operationId: getEngineModels_1
+      parameters:
+      - in: path
+        name: engine-center-id
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: engine-type-id
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: engine-group-id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EngineModelsResponse'
+          description: OK
+      tags:
+      - maintenance-controller
+    post:
+      operationId: save_6
+      parameters:
+      - in: path
+        name: engine-center-id
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: engine-type-id
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: engine-group-id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EngineModelsResponse'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EngineModelsResponse'
+          description: OK
+      tags:
+      - maintenance-controller
+  /v1/admin/engines/management/{engine-center-id}/{engine-type-id}/{engine-group-id}/{engine-model-id}:
+    delete:
+      operationId: deleteModel
+      parameters:
+      - in: path
+        name: engine-center-id
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: engine-type-id
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: engine-group-id
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: engine-model-id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: OK
+      tags:
+      - maintenance-controller
+  /v1/admin/users:
+    get:
+      description: Gets all users or a single user if the user-email query param is
+        set.
+      operationId: getUserProfiles
+      parameters:
+      - description: User Email
+        in: query
+        name: user-email
+        required: false
+        schema:
+          type: string
+      - description: user status
+        in: query
+        name: status
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal Server Error
+      tags:
+      - Administration
+    post:
+      description: Create new user profile.
+      operationId: createUserProfile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserProfileResponse'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfileResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal Server Error
+      tags:
+      - Administration
+    put:
+      description: Updates user information.
+      operationId: updateUserProfile_1
+      parameters:
+      - in: query
+        name: user-status
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserProfileResponse'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfileResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal Server Error
+      tags:
+      - Administration
+  /v1/auth/jwt:
+    post:
+      description: Request JWT authentication token
+      operationId: createJwt
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthenticationRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthDTO'
+          description: OK
+        "401":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "500":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal Server Error
+      tags:
+      - Authorization
+  /v1/calendars/induction/{engineCenterID}/{month}/{year}:
+    get:
+      operationId: getCalendarData
+      parameters:
+      - in: query
+        name: userProfile
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserProfile'
+      - in: path
+        name: engineCenterID
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: month
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - in: path
+        name: year
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CalendarMonthYear'
+          description: OK
+      tags:
+      - induction-calendar-controller
+  /v1/calendars/inductionplanning/{engineTypeID}/{month}/{year}:
+    get:
+      operationId: getInductionPlanningCalendar
+      parameters:
+      - in: query
+        name: userProfile
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserProfile'
+      - in: path
+        name: engineTypeID
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: month
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - in: path
+        name: year
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - in: query
+        name: engineCenterID
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/InductionPlanningCalendar'
+          description: OK
+      tags:
+      - induction-planning-calendar-controller
+  /v1/calendars/slots:
+    post:
+      operationId: createSlot
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                createSlotRequest:
+                  $ref: '#/components/schemas/CreateSlotRequest'
+                userProfile:
+                  $ref: '#/components/schemas/UserProfile'
+        required: true
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CreateSlotResponse'
+          description: OK
+      tags:
+      - slot-controller
+  /v1/calendars/slots/{slotID}:
+    delete:
+      operationId: deleteSlot
+      parameters:
+      - in: path
+        name: slotID
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+          description: OK
+      tags:
+      - slot-controller
+    get:
+      operationId: getSlot
+      parameters:
+      - in: query
+        name: userProfile
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserProfile'
+      - in: path
+        name: slotID
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GetSlotResponse'
+          description: OK
+      tags:
+      - slot-controller
+    put:
+      operationId: updateSlot
+      parameters:
+      - in: path
+        name: slotID
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                updateSlotRequest:
+                  $ref: '#/components/schemas/UpdateSlotRequest'
+                userProfile:
+                  $ref: '#/components/schemas/UserProfile'
+        required: true
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CreateSlotResponse'
+          description: OK
+      tags:
+      - slot-controller
+  /v1/customers:
+    get:
+      operationId: getCustomerList
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomerListResponse'
+          description: OK
+      tags:
+      - customer-controller
+  /v1/engine/contract-types:
+    get:
+      operationId: getEngineContractTypes
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ContractListResponse'
+          description: OK
+      tags:
+      - contracts-controller
+  /v1/engines/assets/available/{slotID}/{esn}:
+    get:
+      operationId: getEngineAsssetList
+      parameters:
+      - in: query
+        name: userProfile
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserProfile'
+      - in: path
+        name: slotID
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - in: path
+        name: esn
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EngineAssetListResponse'
+          description: OK
+      tags:
+      - engine-asset-controller
+  /v1/engines/assets/customer/{slotID}:
+    post:
+      operationId: addToSlotByCustomer_1
+      parameters:
+      - in: path
+        name: slotID
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                addToSlotByCustomerRequest:
+                  $ref: '#/components/schemas/AddToSlotByCustomerRequest'
+                userProfile:
+                  $ref: '#/components/schemas/UserProfile'
+        required: true
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CalendarShopVisit'
+          description: OK
+      tags:
+      - engine-asset-controller
+  /v1/engines/assets/{slotID}/{engineAssetID}:
+    post:
+      operationId: addEngineToSlotByEngine
+      parameters:
+      - in: path
+        name: slotID
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - in: path
+        name: engineAssetID
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                addEngineToSlotRequest:
+                  $ref: '#/components/schemas/AddEngineToSlotRequest'
+                userProfile:
+                  $ref: '#/components/schemas/UserProfile'
+        required: true
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CalendarShopVisit'
+          description: OK
+      tags:
+      - engine-asset-controller
+  /v1/engines/comments/{engine-id}:
+    get:
+      operationId: getEngineComments
+      parameters:
+      - in: path
+        name: engine-id
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentResponse'
+          description: OK
+      tags:
+      - comments-controller
+    post:
+      operationId: insertEngineComments
+      parameters:
+      - in: path
+        name: engine-id
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+          description: OK
+      tags:
+      - comments-controller
+    put:
+      operationId: updateEngineComments
+      parameters:
+      - in: path
+        name: engine-id
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+          description: OK
+      tags:
+      - comments-controller
+  /v1/engines/contracts/{esn}:
+    get:
+      operationId: getEngineContractDetail
+      parameters:
+      - in: query
+        name: userProfile
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserProfile'
+      - in: path
+        name: esn
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EngineContractResponse'
+          description: OK
+      tags:
+      - engine-contract-controller
+  /v1/engines/esn/{engineID}/{newRemovedEngineID}:
+    put:
+      operationId: updateEngineEsn
+      parameters:
+      - in: path
+        name: engineID
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - in: path
+        name: newRemovedEngineID
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CalendarShopVisit'
+          description: OK
+      tags:
+      - engines-controller
+  /v1/engines/groups/{engineCenterID}:
+    get:
+      operationId: getEngineGroups
+      parameters:
+      - in: query
+        name: userProfile
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserProfile'
+      - in: path
+        name: engineCenterID
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EngineGroupListResponse'
+          description: OK
+      tags:
+      - engine-group-controller
+  /v1/engines/groups/{engineCenterID}/{engineTypeID}:
+    get:
+      operationId: getEngineGroupsByEngineType
+      parameters:
+      - in: query
+        name: userProfile
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserProfile'
+      - in: path
+        name: engineCenterID
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: engineTypeID
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EngineGroupListResponse'
+          description: OK
+      tags:
+      - engine-group-controller
+  /v1/engines/induction/phases/{engine-type-id}/{phase-code}/{esn}:
+    get:
+      operationId: getEngineRemovedList_1
+      parameters:
+      - in: query
+        name: userProfile
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserProfile'
+      - in: path
+        name: engine-type-id
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: phase-code
+        required: true
+        schema:
+          $ref: '#/components/schemas/EnginePhases'
+      - in: path
+        name: esn
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EngineRemovedListResponse'
+          description: OK
+      tags:
+      - induction-phases-controller
+  /v1/engines/induction/shortvalues:
+    get:
+      operationId: getInductionShortValues
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InductionMiscShortValuesDTO'
+          description: OK
+      tags:
+      - induction-misc-controller
+  /v1/engines/induction/shortvalues/{key}:
+    get:
+      operationId: getInductionShortValue
+      parameters:
+      - in: path
+        name: key
+        required: true
+        schema:
+          $ref: '#/components/schemas/InductionMiscKeys'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InductionMiscShortValueDTO'
+          description: OK
+      tags:
+      - induction-misc-controller
+  /v1/engines/induction/values:
+    get:
+      description: Fetches miscellaneous induction values given an InductionKeys enum
+        value.
+      operationId: getInductionValues
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InductionValuesDTO'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal Server Error
+      tags:
+      - Induction Planning
+  /v1/engines/induction/values/{key}:
+    get:
+      description: Fetches miscellaneous induction values given an InductionKeys enum
+        value.
+      operationId: getInductionValue
+      parameters:
+      - schema:
+          $ref: '#/components/schemas/InductionMiscKeys'
+      - in: path
+        name: key
+        required: true
+        schema:
+          $ref: '#/components/schemas/InductionMiscKeys'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InductionMiscDTO'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal Server Error
+      tags:
+      - Induction Planning
+  /v1/engines/induction/{engine-type-id}/{esn}:
+    get:
+      operationId: getAvailableEngines
+      parameters:
+      - in: query
+        name: userProfile
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserProfile'
+      - in: path
+        name: engine-type-id
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: esn
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvailableEngineListResponse'
+          description: OK
+      tags:
+      - induction-phases-controller
+  /v1/engines/manual/{engineID}:
+    put:
+      operationId: updateManualEngine
+      parameters:
+      - in: path
+        name: engineID
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                updateManualEngineRequest:
+                  $ref: '#/components/schemas/UpdateManualEngineRequest'
+                userProfile:
+                  $ref: '#/components/schemas/UserProfile'
+        required: true
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CalendarShopVisit'
+          description: OK
+      tags:
+      - engine-manual-controller
+  /v1/engines/manual/{slotID}:
+    post:
+      operationId: addManualEngineToSlot
+      parameters:
+      - in: path
+        name: slotID
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                addManualEngineToSlotRequest:
+                  $ref: '#/components/schemas/AddManualEngineToSlotRequest'
+                userProfile:
+                  $ref: '#/components/schemas/UserProfile'
+        required: true
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CalendarShopVisit'
+          description: OK
+      tags:
+      - engine-manual-controller
+  /v1/engines/models/{engineCenterID}:
+    get:
+      operationId: getEngineModels
+      parameters:
+      - in: query
+        name: userProfile
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserProfile'
+      - in: path
+        name: engineCenterID
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EngineModelListResponse'
+          description: OK
+      tags:
+      - engine-model-controller
+  /v1/engines/models/{engineCenterID}/{engineGroupID}:
+    get:
+      operationId: getEnginelModelsByEngineGroup
+      parameters:
+      - in: query
+        name: userProfile
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserProfile'
+      - in: path
+        name: engineCenterID
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: engineGroupID
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EngineModelListResponse'
+          description: OK
+      tags:
+      - engine-model-controller
+  /v1/engines/odin:
+    post:
+      description: Updates the ODIN details.
+      operationId: saveEngineOdinDetails
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                odinRequestDTO:
+                  $ref: '#/components/schemas/OdinDTO'
+                userProfile:
+                  $ref: '#/components/schemas/UserProfile'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OdinDTO'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal Server Error
+      tags:
+      - Induction Planning
+      - Engine ODIN
+  /v1/engines/odin/details:
+    post:
+      description: Returns the ODIN details.
+      operationId: getEngineOdinDetails
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                request:
+                  $ref: '#/components/schemas/OdinDetailsRequest'
+                userProfile:
+                  $ref: '#/components/schemas/UserProfile'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OdinDTO'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal Server Error
+      tags:
+      - Induction Planning
+      - Engine ODIN
+  /v1/engines/odin/reports:
+    post:
+      operationId: getWipStatusReport_2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OdinRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: string
+                format: binary
+          description: OK
+      tags:
+      - odin-reports-controller
+  /v1/engines/phases:
+    get:
+      operationId: getEnginePhases
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnginePhaseListResponse'
+          description: OK
+      tags:
+      - engine-phase-controller
+  /v1/engines/removed/{engine-type-id}/{phase-code}:
+    get:
+      operationId: getEngineRemovedList
+      parameters:
+      - in: query
+        name: userProfile
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserProfile'
+      - in: path
+        name: engine-type-id
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: phase-code
+        required: true
+        schema:
+          $ref: '#/components/schemas/EnginePhases'
+      - in: query
+        name: esn
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EngineRemovedListResponse'
+          description: OK
+      tags:
+      - engine-phases-controller-__-old
+  /v1/engines/slot/{engineID}/{newSlotID}:
+    put:
+      operationId: updateEngineSlot
+      parameters:
+      - in: path
+        name: engineID
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - in: path
+        name: newSlotID
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CalendarShopVisit'
+          description: OK
+      tags:
+      - engines-controller
+  /v1/engines/types/detail/{engineTypeID}:
+    get:
+      operationId: getEngineTypeDetail
+      parameters:
+      - in: query
+        name: userProfile
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserProfile'
+      - in: path
+        name: engineTypeID
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EngineType'
+          description: OK
+      tags:
+      - engine-type-controller
+  /v1/engines/types/{engineCenterID}:
+    get:
+      operationId: getEngineTypes
+      parameters:
+      - in: query
+        name: userProfile
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserProfile'
+      - in: path
+        name: engineCenterID
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EngineTypeListResponse'
+          description: OK
+      tags:
+      - engine-type-controller
+  /v1/engines/types/{engineCenterID}/{engineGroupID}:
+    get:
+      operationId: getEngineTypesByEngineGroup
+      parameters:
+      - in: query
+        name: userProfile
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserProfile'
+      - in: path
+        name: engineCenterID
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: engineGroupID
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EngineTypeListResponse'
+          description: OK
+      tags:
+      - engine-type-controller
+  /v1/engines/{engineID}:
+    delete:
+      operationId: deleteEngine
+      parameters:
+      - in: path
+        name: engineID
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+          description: OK
+      tags:
+      - engines-controller
+  /v1/le:
+    post:
+      operationId: getLeData
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeResponse'
+          description: OK
+      tags:
+      - le-controller
+  /v1/le/plan:
+    post:
+      operationId: getLePlanData
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LePlanRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeResponse'
+          description: OK
+      tags:
+      - le-controller
+  /v1/le/update:
+    post:
+      operationId: save_2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeUpdateRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+      tags:
+      - le-controller
+  /v1/materials/stages/planned:
+    put:
+      operationId: updateInductionAnnualPlan
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnnualPlanResponse'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnnualPlanResponse'
+          description: OK
+      tags:
+      - induction-mml-controller
+  /v1/materials/stages/planned/{engine-center}/{engine-group}/{plan-market}/{plan-type}/{year}:
+    get:
+      operationId: getInductionAnnualPlan
+      parameters:
+      - in: path
+        name: engine-center
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: engine-group
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: plan-market
+        required: true
+        schema:
+          type: string
+          enum:
+          - "0"
+          - "1"
+      - in: path
+        name: plan-type
+        required: true
+        schema:
+          type: string
+          enum:
+          - "0"
+          - "1"
+          - "2"
+      - in: path
+        name: year
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnnualPlanResponse'
+          description: OK
+      tags:
+      - induction-mml-controller
+  /v1/mml:
+    post:
+      operationId: getMmlData
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MmlRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MmlResponse'
+          description: OK
+      tags:
+      - mml-controller
+  /v1/mml/dates/monthly:
+    get:
+      operationId: getMonthlyDates
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MonthlyDatesResponse'
+          description: OK
+      tags:
+      - mml-controller
+  /v1/mml/dates/quarterly:
+    get:
+      operationId: getQuarterlyDates
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/QuarterlyDatesResponse'
+          description: OK
+      tags:
+      - mml-controller
+  /v1/mml/plan:
+    post:
+      operationId: getMmlPlanData
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MmlPlanRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MmlResponse'
+          description: OK
+      tags:
+      - mml-controller
+  /v1/mml/update:
+    post:
+      operationId: updateMmlData
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MmlUpdateRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+      tags:
+      - mml-controller
+  /v1/modules:
+    get:
+      operationId: getModuleList
+      parameters:
+      - in: query
+        name: userProfile
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserProfile'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModuleListResponse'
+          description: OK
+      tags:
+      - module-controller
+  /v1/modules/{engineID}:
+    put:
+      operationId: updateModule
+      parameters:
+      - in: path
+        name: engineID
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                updateModuleRequest:
+                  $ref: '#/components/schemas/UpdateModuleRequest'
+                userProfile:
+                  $ref: '#/components/schemas/UserProfile'
+        required: true
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CalendarShopVisit'
+          description: OK
+      tags:
+      - module-controller
+  /v1/modules/{slotID}/{moduleID}:
+    post:
+      operationId: addToSlotByCustomer
+      parameters:
+      - in: path
+        name: slotID
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - in: path
+        name: moduleID
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                addModuleToSlotRequest:
+                  $ref: '#/components/schemas/AddModuleToSlotRequest'
+                userProfile:
+                  $ref: '#/components/schemas/UserProfile'
+        required: true
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CalendarShopVisit'
+          description: OK
+      tags:
+      - module-controller
+  /v1/mro-collab/wip/{esn}/{work-order}:
+    get:
+      description: Fetches Work In Progress.
+      operationId: getMroInfo_1
+      parameters:
+      - description: Engine Serial Number
+        in: path
+        name: esn
+        required: true
+        schema:
+          type: string
+      - description: Work Order
+        in: path
+        name: work-order
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MroWipResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+      tags:
+      - MRO Collab
+  /v1/mro-collab/workorder:
+    post:
+      description: Returns Work In Progress.
+      operationId: getMroInfo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MroWorkOrderRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+      tags:
+      - MRO Collab
+  /v1/report/engine:
+    get:
+      operationId: getEngineReport
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EngineReportResponse'
+          description: OK
+      tags:
+      - engine-report-controller
+  /v1/report/odin:
+    get:
+      operationId: getOdinReport
+      parameters:
+      - in: query
+        name: customerName
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: engineType
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/OdinReportResponse'
+          description: OK
+      tags:
+      - odin-report-controller
+  /v1/user/profile:
+    get:
+      operationId: getUserProfile
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+          description: OK
+      tags:
+      - user-profile-controller
+    put:
+      operationId: updateUserProfile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DefaultResponse'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultResponse'
+          description: OK
+      tags:
+      - user-profile-controller
+  /v1/users:
+    get:
+      operationId: getProfile
+      parameters:
+      - in: query
+        name: userProfile
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserProfile'
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserProfileResponse'
+          description: OK
+      tags:
+      - user-controller
+  /v1/wip:
+    put:
+      description: Persists Work In Progress.
+      operationId: updateWorkInProgress
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkInProgress'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+      tags:
+      - Work In Progress
+  /v1/wip/categories:
+    get:
+      description: Fetches all categories from DOME_PACING_SUBCATEGORY.
+      operationId: getAllCategories
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+          description: OK
+      tags:
+      - Work In Progress
+  /v1/wip/customers/{engine-center}/{engine-type}:
+    get:
+      description: Fetches customers with Work In Progress.
+      operationId: getCustomersWithWorkInProgress
+      parameters:
+      - description: Engine Center
+        in: path
+        name: engine-center
+        required: true
+        schema:
+          type: string
+      - description: Engine Type
+        in: path
+        name: engine-type
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+      tags:
+      - Work In Progress
+  /v1/wip/details/{engine-sn}:
+    get:
+      description: Fetches Work In Progress.
+      operationId: getWorkInProgressHistory
+      parameters:
+      - description: Engine Center
+        in: path
+        name: engine-sn
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - description: Module Indicator
+        in: query
+        name: is-module
+        required: true
+        schema:
+          type: boolean
+          default: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkInProgress'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+      tags:
+      - Work In Progress
+  /v1/wip/excel/export/{engine-center}/{engine-type}:
+    post:
+      operationId: exportFile
+      parameters:
+      - in: path
+        name: engine-center
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: engine-type
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: string
+                format: binary
+          description: OK
+      tags:
+      - excel-controller
+  /v1/wip/excel/import:
+    post:
+      operationId: save_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkInProgressResponse'
+        required: true
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/WorkInProgressResponse'
+          description: OK
+      tags:
+      - excel-controller
+    put:
+      operationId: importFile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required:
+              - file
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/WorkInProgressImportResponse'
+          description: OK
+      tags:
+      - excel-controller
+  /v1/wip/hold-days/{engine-id}/{engine-center-id}:
+    get:
+      operationId: getHoldDays
+      parameters:
+      - in: path
+        name: engine-id
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - in: path
+        name: engine-center-id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HoldDaysResponse'
+          description: OK
+      tags:
+      - hold-days-contoller
+    put:
+      operationId: updateHoldDayDetails
+      parameters:
+      - in: path
+        name: engine-id
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - in: path
+        name: engine-center-id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HoldDaysRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HoldDaysResponse'
+          description: OK
+      tags:
+      - hold-days-contoller
+  /v1/wip/pacing-items:
+    post:
+      operationId: createPacingItem
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PacingItem'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PacingItem'
+          description: OK
+      tags:
+      - pacing-controller
+    put:
+      operationId: updatePacingItem
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PacingItem'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PacingItem'
+          description: OK
+      tags:
+      - pacing-controller
+  /v1/wip/pacing-items/{engine-id}:
+    get:
+      operationId: getPacingItems
+      parameters:
+      - in: path
+        name: engine-id
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PacingItemResponse'
+          description: OK
+      tags:
+      - pacing-controller
+  /v1/wip/pacing-items/{pacing-id}:
+    delete:
+      operationId: deletePacingItem
+      parameters:
+      - in: path
+        name: pacing-id
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: OK
+      tags:
+      - pacing-controller
+  /v1/wip/reports/status/{engine-center}/{engine-type}:
+    post:
+      operationId: getWipStatusReport
+      parameters:
+      - in: path
+        name: engine-center
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: engine-type
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: customer-id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: string
+                format: binary
+          description: OK
+      tags:
+      - reports-controller
+  /v1/wip/reports/status/{engine-center}/{engine-type}/{customer-id}:
+    post:
+      operationId: getWipStatusReport_1
+      parameters:
+      - in: path
+        name: engine-center
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: engine-type
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: customer-id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: string
+                format: binary
+          description: OK
+      tags:
+      - reports-controller
+  /v1/wip/reports/strike/{engine-center}/{engine-type}:
+    post:
+      operationId: getStrikeFileReport
+      parameters:
+      - in: path
+        name: engine-center
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: engine-type
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: string
+                format: binary
+          description: OK
+      tags:
+      - reports-controller
+  /v1/wip/reports/tracking/{engine-center}/{engine-type}:
+    post:
+      operationId: getWipTrackingReport
+      parameters:
+      - in: path
+        name: engine-center
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: engine-type
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: string
+                format: binary
+          description: OK
+      tags:
+      - reports-controller
+  /v1/wip/smi:
+    post:
+      operationId: updateSmiRevision
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SmiResponse'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmiResponse'
+          description: OK
+      tags:
+      - smi-controller
+  /v1/wip/smi/{engine-id}/{eng-group-id}:
+    get:
+      operationId: getSmiRevisions
+      parameters:
+      - in: path
+        name: engine-id
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - in: path
+        name: eng-group-id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmiResponse'
+          description: OK
+      tags:
+      - smi-controller
+  /v1/wip/smi/{smi-id}:
+    delete:
+      operationId: deleteSmiRevision
+      parameters:
+      - in: path
+        name: smi-id
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: OK
+      tags:
+      - smi-controller
+  /v1/wip/subcategories/{category}:
+    get:
+      description: Fetches subcategories for given catgory.
+      operationId: getWipSubCategories
+      parameters:
+      - description: Catgory
+        in: path
+        name: category
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+      tags:
+      - Work In Progress
+  /v1/wip/{engine-center}/{engine-type}:
+    get:
+      description: Fetches Work In Progress.
+      operationId: getWorkInProgress_1
+      parameters:
+      - description: Engine Center
+        in: path
+        name: engine-center
+        required: true
+        schema:
+          type: string
+      - description: Engine Type
+        in: path
+        name: engine-type
+        required: true
+        schema:
+          type: string
+      - description: Engine Id
+        in: path
+        name: engine-sn
+        required: true
+        schema:
+          type: string
+      - description: Module Indicator
+        in: query
+        name: is-module
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkInProgress'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+      tags:
+      - Work In Progress
+  /v1/wip/{engine-sn}:
+    get:
+      description: Fetches Work In Progress.
+      operationId: getWorkInProgress
+      parameters:
+      - description: Engine Center
+        in: path
+        name: engine-center
+        required: true
+        schema:
+          type: string
+      - description: Engine Type
+        in: path
+        name: engine-type
+        required: true
+        schema:
+          type: string
+      - description: Engine Id
+        in: path
+        name: engine-sn
+        required: true
+        schema:
+          type: string
+      - description: Module Indicator
+        in: query
+        name: is-module
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkInProgress'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+      tags:
+      - Work In Progress
+components:
+  schemas:
+    AccountManagementResponse:
+      type: object
+      properties:
+        additionalRoles:
+          type: array
+          items:
+            type: string
+            enum:
+            - ADMINISTRATOR
+            - READ
+            - READ_WRITE
+            - NETWORK_MANAGEMENT
+            - RESIDENT_CENTER_MANAGER
+        engineCenterGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserProfileEngineCenter'
+        engineCenters:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserProfileEngineCenter'
+        engineGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserProfileEngineGroup'
+        securityRoles:
+          type: array
+          items:
+            type: string
+            enum:
+            - ADMINISTRATOR
+            - READ
+            - READ_WRITE
+            - NETWORK_MANAGEMENT
+            - RESIDENT_CENTER_MANAGER
+      required:
+      - additionalRoles
+      - engineCenterGroups
+      - engineGroups
+      - securityRoles
+    Activity:
+      type: object
+      properties:
+        activityDate:
+          type: string
+        activityId:
+          type: integer
+          format: int64
+        customerID:
+          type: string
+        description:
+          type: string
+        engineCenterId:
+          type: string
+        engineGroup:
+          type: string
+        engineModel:
+          type: string
+        engineModule:
+          type: string
+        engineSerialNumber:
+          type: string
+        engineType:
+          type: string
+        item:
+          type: string
+        type:
+          type: string
+        userEmail:
+          type: string
+    AddEngineToSlotRequest:
+      type: object
+      properties:
+        category:
+          type: string
+        engineCenterId:
+          type: string
+        eventId:
+          type: integer
+          format: int32
+        odinId:
+          type: integer
+          format: int32
+        salesOrderType:
+          type: string
+    AddManualEngineToSlotRequest:
+      type: object
+      properties:
+        category:
+          type: string
+        customerID:
+          type: string
+        engineGroupID:
+          type: string
+        engineModelID:
+          type: string
+        esn:
+          type: string
+        salesOrderType:
+          type: string
+    AddModuleToSlotRequest:
+      type: object
+      properties:
+        customerID:
+          type: string
+        esn:
+          type: string
+    AddToSlotByCustomerRequest:
+      type: object
+      properties:
+        category:
+          type: string
+        customerID:
+          type: string
+        engineGroupID:
+          type: string
+        engineModelID:
+          type: string
+        salesOrderType:
+          type: string
+    AnnualPlan:
+      type: object
+      properties:
+        category:
+          type: string
+        engCenterId:
+          type: string
+        engCenterName:
+          type: string
+        engGroupId:
+          type: string
+        engGroupName:
+          type: string
+        monthlyPlans:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonthlyPlan'
+        planMarket:
+          type: string
+          enum:
+          - "0"
+          - "1"
+        planType:
+          type: string
+          enum:
+          - "0"
+          - "1"
+          - "2"
+        planYear:
+          type: integer
+          format: int32
+        salesOrderType:
+          type: string
+      required:
+      - category
+      - engCenterId
+      - engGroupId
+      - monthlyPlans
+      - planMarket
+      - planType
+      - planYear
+      - salesOrderType
+    AnnualPlanResponse:
+      type: object
+      properties:
+        annualPlans:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnnualPlan'
+      required:
+      - annualPlans
+    AuthDTO:
+      type: object
+      properties:
+        token:
+          type: string
+        userEmail:
+          type: string
+    AuthenticationRequest:
+      type: object
+      description: Authentication Request
+      properties:
+        apiPassword:
+          type: string
+        apiUserName:
+          type: string
+        userEmailAddress:
+          type: string
+    AvailableEngine:
+      type: object
+      properties:
+        engineAssetID:
+          type: integer
+          format: int32
+        esn:
+          type: string
+        eventId:
+          type: integer
+          format: int32
+        installed:
+          type: boolean
+        operatorName:
+          type: string
+        planned:
+          type: boolean
+        removed:
+          type: boolean
+        slotID:
+          type: integer
+          format: int32
+        status:
+          type: string
+    AvailableEngineListResponse:
+      type: object
+      properties:
+        engines:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableEngine'
+    BasicEngineCenter:
+      type: object
+      properties:
+        active:
+          type: boolean
+        centerId:
+          type: string
+          maxLength: 10
+          minLength: 3
+          pattern: "^EC\\d{1,8}$"
+        centerName:
+          type: string
+          maxLength: 40
+          minLength: 1
+      required:
+      - active
+      - centerId
+      - centerName
+    BasicEngineGroup:
+      type: object
+      properties:
+        active:
+          type: boolean
+        groupId:
+          type: string
+          maxLength: 10
+          minLength: 3
+          pattern: "^EG\\d{1,8}$"
+        groupName:
+          type: string
+          maxLength: 100
+          minLength: 1
+      required:
+      - active
+      - groupName
+    BasicEngineModel:
+      type: object
+      properties:
+        active:
+          type: boolean
+        modelId:
+          type: string
+          maxLength: 10
+          minLength: 3
+          pattern: "^EM\\d{1,8}$"
+        modelName:
+          type: string
+          maxLength: 100
+          minLength: 1
+      required:
+      - active
+      - modelName
+    BasicEngineType:
+      type: object
+      properties:
+        active:
+          type: boolean
+        assignedToCustomer:
+          type: boolean
+        eagleData:
+          type: boolean
+        inEngineCenter:
+          type: boolean
+        typeId:
+          type: string
+        typeName:
+          type: string
+          maxLength: 100
+          minLength: 1
+      required:
+      - active
+      - assignedToCustomer
+      - eagleData
+      - inEngineCenter
+      - typeName
+    CalendarDay:
+      type: object
+      properties:
+        boxNumber:
+          type: integer
+          format: int32
+        dayOfMonth:
+          type: integer
+          format: int32
+        shopVisitsByEngineType:
+          type: array
+          items:
+            $ref: '#/components/schemas/CalendarShopVisit'
+        validDate:
+          type: boolean
+    CalendarEngine:
+      type: object
+      properties:
+        category:
+          type: string
+        customerID:
+          type: string
+        customerName:
+          type: string
+        customerShortName:
+          type: string
+        engineGroupID:
+          type: string
+        engineID:
+          type: integer
+          format: int32
+        engineModelID:
+          type: string
+        esn:
+          type: string
+        manualEngine:
+          type: boolean
+        moduleID:
+          type: integer
+          format: int32
+        moduleName:
+          type: string
+        salesOrderType:
+          type: string
+    CalendarMonthYear:
+      type: object
+      properties:
+        calYYMM:
+          type: string
+        days:
+          type: array
+          items:
+            $ref: '#/components/schemas/CalendarDay'
+        engineCenterID:
+          type: string
+        engineCenterName:
+          type: string
+        month:
+          type: integer
+          format: int32
+        year:
+          type: integer
+          format: int32
+    CalendarShopVisit:
+      type: object
+      properties:
+        engineTypeID:
+          type: string
+        engineTypeName:
+          type: string
+        engines:
+          type: array
+          items:
+            $ref: '#/components/schemas/CalendarEngine'
+        shopVisitType:
+          $ref: '#/components/schemas/ShopVisitType'
+        slotID:
+          type: integer
+          format: int32
+        subShopVisitType:
+          type: string
+    Comment:
+      type: object
+      properties:
+        commentId:
+          type: integer
+          format: int32
+        dateUpdated:
+          type: string
+          format: date-time
+        external:
+          type: boolean
+        firstName:
+          type: string
+        lastName:
+          type: string
+        logEmail:
+          type: string
+        notes:
+          type: string
+          maxLength: 2000
+          minLength: 0
+      required:
+      - external
+      - notes
+    CommentResponse:
+      type: object
+      properties:
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+      required:
+      - comments
+    ContractListResponse:
+      type: object
+      properties:
+        contractTypes:
+          type: array
+          items:
+            type: string
+    CreateSlotRequest:
+      type: object
+      properties:
+        day:
+          type: integer
+          format: int32
+          maximum: 31
+          minimum: 1
+        engineCenterID:
+          type: string
+          pattern: "^EC\\d{1,10}$"
+        engineTypeID:
+          type: string
+          pattern: "^ET\\d{1,10}$"
+        month:
+          type: integer
+          format: int32
+          maximum: 12
+          minimum: 1
+        shopVisitType:
+          $ref: '#/components/schemas/ShopVisitType'
+        subShopVisitType:
+          type: string
+        year:
+          type: integer
+          format: int32
+          maximum: 2100
+          minimum: 2010
+      required:
+      - day
+      - engineCenterID
+      - engineTypeID
+      - month
+      - year
+    CreateSlotResponse:
+      type: object
+      properties:
+        day:
+          type: integer
+          format: int32
+        engineCenterID:
+          type: string
+        engineTypeID:
+          type: string
+        engineTypeName:
+          type: string
+        month:
+          type: integer
+          format: int32
+        shopVisitType:
+          $ref: '#/components/schemas/ShopVisitType'
+        slotID:
+          type: integer
+          format: int32
+        subShopVisitType:
+          type: string
+        year:
+          type: integer
+          format: int32
+    Customer:
+      type: object
+      properties:
+        active:
+          type: boolean
+        customerID:
+          type: string
+        name:
+          type: string
+        shortName:
+          type: string
+    CustomerListResponse:
+      type: object
+      properties:
+        customers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+    DefaultResponse:
+      type: object
+      properties:
+        defaultEngineCenter:
+          type: string
+        defaultEngineType:
+          type: string
+        defaultPage:
+          type: string
+    DetailsDTO:
+      type: object
+      properties:
+        actualReceipentDate:
+          type: string
+          format: date
+        customerName:
+          type: string
+        engineCategory:
+          type: string
+        engineCenterName:
+          type: string
+        engineGroupId:
+          type: string
+        engineGroupName:
+          type: string
+        engineId:
+          type: integer
+          format: int32
+        engineSerialNumber:
+          type: string
+        opportunity:
+          type: boolean
+        opportunityId:
+          type: integer
+          format: int32
+        planInductionDate:
+          type: string
+          format: date
+        risk:
+          type: boolean
+        riskId:
+          type: integer
+          format: int32
+    EngineAssetListResponse:
+      type: object
+      properties:
+        engines:
+          type: array
+          items:
+            $ref: '#/components/schemas/EngineAssetResponse'
+    EngineAssetResponse:
+      type: object
+      properties:
+        assetID:
+          type: integer
+          format: int32
+        engineAssetID:
+          type: integer
+          format: int32
+        engineGroupID:
+          type: string
+        engineGroupName:
+          type: string
+        engineModelID:
+          type: string
+        engineModelName:
+          type: string
+        engineTypeID:
+          type: string
+        engineTypeName:
+          type: string
+        esn:
+          type: string
+        operatorID:
+          type: string
+        operatorName:
+          type: string
+        operatorShortName:
+          type: string
+        removalDate:
+          type: string
+          format: date
+        status:
+          type: string
+        thrust:
+          type: string
+        visitType:
+          $ref: '#/components/schemas/ShopVisitType'
+    EngineCentersResponse:
+      type: object
+      properties:
+        engineCenters:
+          type: array
+          items:
+            $ref: '#/components/schemas/BasicEngineCenter'
+      required:
+      - engineCenters
+    EngineContractResponse:
+      type: object
+      properties:
+        accessoryCoverage:
+          type: string
+        description:
+          type: string
+        endDate:
+          type: string
+          format: date
+        esn:
+          type: string
+        leaseReturnCoverage:
+          type: string
+        leaseReturnDate:
+          type: string
+          format: date
+        llpCoverage:
+          type: string
+        refurbPayStructure:
+          type: string
+        s1RetrofitCoverage:
+          type: string
+        shippingCoverage:
+          type: string
+        subFleet:
+          type: string
+        svs:
+          type: string
+        years:
+          type: string
+    EngineGroup:
+      type: object
+      properties:
+        engineGroupID:
+          type: string
+        engineTypeID:
+          type: string
+        name:
+          type: string
+    EngineGroupListResponse:
+      type: object
+      properties:
+        engineGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/EngineGroup'
+    EngineGroupsResponse:
+      type: object
+      properties:
+        engineGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/BasicEngineGroup'
+      required:
+      - engineGroups
+    EngineMap:
+      type: object
+      properties:
+        engine:
+          type: string
+        value:
+          type: integer
+          format: int32
+    EngineModel:
+      type: object
+      properties:
+        engineGroupID:
+          type: string
+        engineModelID:
+          type: string
+        name:
+          type: string
+    EngineModelListResponse:
+      type: object
+      properties:
+        engineModels:
+          type: array
+          items:
+            $ref: '#/components/schemas/EngineModel'
+    EngineModelsResponse:
+      type: object
+      properties:
+        engineModels:
+          type: array
+          items:
+            $ref: '#/components/schemas/BasicEngineModel'
+      required:
+      - engineModels
+    EnginePhaseEntity:
+      type: object
+      properties:
+        displayRank:
+          type: integer
+          format: int32
+        enginePhaseID:
+          type: string
+        name:
+          type: string
+    EnginePhaseListResponse:
+      type: object
+      properties:
+        enginePhases:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnginePhaseEntity'
+    EnginePhases:
+      type: string
+      enum:
+      - ALL
+      - BER
+      - COMPLETE
+      - CWI
+      - DISABLED
+      - INACTIVE
+      - REMOVEDENG
+      - WAITREMOVE
+      - WIP
+      - WORKINDUCT
+    EngineRemovedDTO:
+      type: object
+      description: Removed Engine Data Model
+      properties:
+        assetID:
+          type: integer
+          format: int32
+        contractType:
+          type: string
+        engineAssetID:
+          type: integer
+          format: int32
+        engineId:
+          type: integer
+          format: int32
+        engineModelID:
+          type: string
+        engineModelName:
+          type: string
+        esn:
+          type: string
+        eventId:
+          type: integer
+          format: int32
+        installed:
+          type: boolean
+        odinId:
+          type: integer
+          format: int32
+        operatorID:
+          type: string
+        operatorName:
+          type: string
+        phaseCode:
+          type: string
+        planned:
+          type: boolean
+        preliminaryInductionDate:
+          type: string
+          format: date
+        removalDate:
+          type: string
+          format: date
+        removalReason:
+          type: string
+        removed:
+          type: boolean
+        removedEnginesID:
+          type: integer
+          format: int32
+        slotDate:
+          type: string
+          format: date
+        slotID:
+          type: integer
+          format: int32
+        status:
+          type: string
+        thrust:
+          type: string
+    EngineRemovedListResponse:
+      type: object
+      properties:
+        engines:
+          type: array
+          items:
+            $ref: '#/components/schemas/EngineRemovedDTO'
+    EngineReportResponse:
+      type: object
+      properties:
+        engineMaps:
+          type: array
+          items:
+            $ref: '#/components/schemas/EngineMap'
+    EngineType:
+      type: object
+      properties:
+        edata:
+          type: boolean
+        engineTypeID:
+          type: string
+        name:
+          type: string
+    EngineTypeListResponse:
+      type: object
+      properties:
+        engineTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/EngineType'
+    EngineTypesResponse:
+      type: object
+      properties:
+        engineTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/BasicEngineType'
+      required:
+      - engineTypes
+    ErrorResponse:
+      type: object
+      description: Error response schema.
+      properties:
+        errors:
+          type: array
+          description: Chain of application error messages.
+          items:
+            type: string
+            description: Chain of application error messages.
+        message:
+          type: string
+          description: Application error message.
+        reason:
+          type: string
+          description: "The HttpStatus Reason Phrase  (e.g., NOT FOUND)."
+        status:
+          type: string
+          description: "The HttpStatus name (e.g., NOT_FOUND)."
+        statusCode:
+          type: integer
+          format: int32
+          description: "The HttpStatus value  (e.g., 404)."
+    GetSlotResponse:
+      type: object
+      properties:
+        day:
+          type: integer
+          format: int32
+        engineCenterID:
+          type: string
+        engineTypeID:
+          type: string
+        engineTypeName:
+          type: string
+        engines:
+          type: array
+          items:
+            $ref: '#/components/schemas/SlotEngine'
+        month:
+          type: integer
+          format: int32
+        shopVisitType:
+          $ref: '#/components/schemas/ShopVisitType'
+        slotID:
+          type: integer
+          format: int32
+        subShopVisitType:
+          type: string
+        year:
+          type: integer
+          format: int32
+    GrantedAuthority:
+      type: object
+      properties:
+        authority:
+          type: string
+    HoldDayDetail:
+      type: object
+      properties:
+        approved:
+          type: integer
+          format: int32
+        category:
+          type: string
+        description:
+          type: string
+        endDate:
+          type: string
+          format: date
+        holdDaysHolidayID:
+          type: integer
+          format: int32
+        pacingId:
+          type: integer
+          format: int32
+        proposed:
+          type: integer
+          format: int64
+        startDate:
+          type: string
+          format: date
+        subCategory:
+          type: string
+    HoldDaysRequest:
+      type: object
+      properties:
+        holdDayDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/HoldDayDetail'
+    HoldDaysResponse:
+      type: object
+      properties:
+        holdDayDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/HoldDayDetail'
+        holdDays:
+          type: integer
+          format: int64
+        holdDaysSummary:
+          $ref: '#/components/schemas/HoldDaysSummary'
+        netTat:
+          type: integer
+          format: int64
+    HoldDaysSummary:
+      type: object
+      properties:
+        actualCompletionDate:
+          type: string
+          format: date
+        actualGate1EndDate:
+          type: string
+          format: date
+        actualGate3StartDate:
+          type: string
+          format: date
+        actualInductionDate:
+          type: string
+          format: date
+        grossTat:
+          type: integer
+          format: int64
+    InductionMiscDTO:
+      type: object
+      properties:
+        values:
+          type: array
+          items:
+            type: string
+    InductionMiscKeys:
+      type: string
+      enum:
+      - IPSVCLSV2500
+      - IPSVCLSPW1
+      - IPSVCLSOTHER
+      - IPLLPRPLCALL
+      - IPUPGRADEV2500
+      - IPUPGRADEPW1
+      - IPUPGRADEOTHER
+      - IPEBUSHOP
+      - IPCURRLOC
+      - IPPRELIMCHGRSN
+      - WIPSHIPTYPE
+      - WIPENGCATEGORY
+      - ENGSALESORDER
+      - WIPWSIND
+    InductionMiscShortValueDTO:
+      type: object
+      properties:
+        shortField:
+          type: string
+        valueField:
+          type: string
+    InductionMiscShortValuesDTO:
+      type: object
+      properties:
+        inductionMiscShortValues:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/InductionMiscShortValueDTO'
+    InductionPlanningCalendar:
+      type: object
+      properties:
+        calYYMM:
+          type: string
+        calendarName:
+          type: string
+        days:
+          type: array
+          items:
+            $ref: '#/components/schemas/InductionPlanningCalendarDay'
+        engineTypeID:
+          type: string
+        engineTypeName:
+          type: string
+        month:
+          type: integer
+          format: int32
+        year:
+          type: integer
+          format: int32
+    InductionPlanningCalendarDay:
+      type: object
+      properties:
+        boxNumber:
+          type: integer
+          format: int32
+        dayOfMonth:
+          type: integer
+          format: int32
+        shopVisitsSummary:
+          type: array
+          items:
+            $ref: '#/components/schemas/InductionPlanningCalendarVisitSummary'
+        validDate:
+          type: boolean
+    InductionPlanningCalendarEngine:
+      type: object
+      properties:
+        engineID:
+          type: integer
+          format: int32
+        esn:
+          type: string
+    InductionPlanningCalendarVisitSummary:
+      type: object
+      properties:
+        engineCenterCode:
+          type: string
+        engineCenterID:
+          type: string
+        engineCenterName:
+          type: string
+        engines:
+          type: array
+          items:
+            $ref: '#/components/schemas/InductionPlanningCalendarEngine'
+        shopVisitType:
+          type: integer
+          format: int32
+        slotID:
+          type: integer
+          format: int32
+    InductionValuesDTO:
+      type: object
+      properties:
+        inductionValues:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    LePlanRequest:
+      type: object
+      properties:
+        engineCenterId:
+          type: string
+        engineGroupId:
+          type: string
+        leMarket:
+          type: string
+          enum:
+          - "0"
+          - "1"
+        leType:
+          type: string
+          enum:
+          - "0"
+          - "1"
+          - "2"
+        monthQtr:
+          type: integer
+          format: int32
+          maximum: 12
+        period:
+          type: string
+          pattern: monthly|quarterly
+        year:
+          type: integer
+          format: int32
+      required:
+      - engineCenterId
+      - engineGroupId
+      - leMarket
+      - leType
+      - monthQtr
+      - period
+      - year
+    LeRequest:
+      type: object
+      properties:
+        engineCenterId:
+          type: string
+        engineGroupId:
+          type: string
+        leMarket:
+          type: string
+          enum:
+          - "0"
+          - "1"
+        leType:
+          type: string
+          enum:
+          - "0"
+          - "1"
+          - "2"
+        monthQtr:
+          type: integer
+          format: int32
+          maximum: 12
+        period:
+          type: string
+          pattern: monthly|quarterly
+        year:
+          type: integer
+          format: int32
+      required:
+      - engineCenterId
+      - engineGroupId
+      - leMarket
+      - leType
+      - monthQtr
+      - period
+      - year
+    LeResponse:
+      type: object
+      properties:
+        leDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/DetailsDTO'
+        lePlanDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/DetailsDTO'
+    LeUpdateRequest:
+      type: object
+      properties:
+        engineCenterId:
+          type: string
+        engineGroupId:
+          type: string
+        leDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/DetailsDTO'
+        leMarket:
+          type: string
+          enum:
+          - "0"
+          - "1"
+        lePlanDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/DetailsDTO'
+        leType:
+          type: string
+          enum:
+          - "0"
+          - "1"
+          - "2"
+        monthQtr:
+          type: integer
+          format: int32
+          maximum: 12
+        period:
+          type: string
+          pattern: monthly|quarterly
+        year:
+          type: integer
+          format: int32
+      required:
+      - engineCenterId
+      - engineGroupId
+      - leMarket
+      - leType
+      - monthQtr
+      - period
+      - year
+    MmlDetails:
+      type: object
+      properties:
+        actualReceipentDate:
+          type: string
+          format: date
+        customerName:
+          type: string
+        engineCategory:
+          type: string
+        engineCenterName:
+          type: string
+        engineGroupId:
+          type: string
+        engineGroupName:
+          type: string
+        engineId:
+          type: integer
+          format: int32
+        engineSerialNumber:
+          type: string
+        month:
+          type: integer
+          format: int32
+        planInductionDate:
+          type: string
+          format: date
+    MmlPlanRequest:
+      type: object
+      properties:
+        engineCenterId:
+          type: string
+        engineGroupId:
+          type: string
+        month:
+          type: integer
+          format: int32
+          maximum: 12
+        period:
+          type: string
+          pattern: monthly|quarterly
+        planMarket:
+          type: string
+          enum:
+          - "0"
+          - "1"
+        planType:
+          type: string
+          enum:
+          - "0"
+          - "1"
+          - "2"
+        year:
+          type: integer
+          format: int32
+      required:
+      - engineCenterId
+      - engineGroupId
+      - month
+      - period
+      - planMarket
+      - planType
+      - year
+    MmlRequest:
+      type: object
+      properties:
+        engineCenterId:
+          type: string
+        engineGroupId:
+          type: string
+        month:
+          type: integer
+          format: int32
+          maximum: 12
+        period:
+          type: string
+          pattern: monthly|quarterly
+        planMarket:
+          type: string
+          enum:
+          - "0"
+          - "1"
+        planType:
+          type: string
+          enum:
+          - "0"
+          - "1"
+          - "2"
+        year:
+          type: integer
+          format: int32
+      required:
+      - engineCenterId
+      - engineGroupId
+      - month
+      - period
+      - planMarket
+      - planType
+      - year
+    MmlResponse:
+      type: object
+      properties:
+        mmlDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/MmlDetails'
+        mmlPlanDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/MmlDetails'
+    MmlUpdateRequest:
+      type: object
+      properties:
+        engineCenterId:
+          type: string
+        engineGroupId:
+          type: string
+        mmlDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/MmlDetails'
+        month:
+          type: integer
+          format: int32
+          maximum: 12
+        period:
+          type: string
+          pattern: monthly|quarterly
+        planMarket:
+          type: string
+          enum:
+          - "0"
+          - "1"
+        planType:
+          type: string
+          enum:
+          - "0"
+          - "1"
+          - "2"
+        year:
+          type: integer
+          format: int32
+      required:
+      - engineCenterId
+      - engineGroupId
+      - mmlDetails
+      - month
+      - period
+      - planMarket
+      - planType
+      - year
+    ModuleBuildGroup:
+      type: object
+      properties:
+        mbg:
+          type: string
+        mbgId:
+          type: integer
+          format: int32
+        mbgSeq:
+          type: integer
+          format: int32
+        mbgValue:
+          type: string
+          maxLength: 50
+          minLength: 0
+    ModuleListResponse:
+      type: object
+      properties:
+        modules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModuleResponse'
+    ModuleResponse:
+      type: object
+      properties:
+        moduleID:
+          type: integer
+          format: int32
+        moduleName:
+          type: string
+    MonthlyDatesResponse:
+      type: object
+      properties:
+        month:
+          type: integer
+          format: int32
+        monthName:
+          type: string
+        year:
+          type: integer
+          format: int32
+    MonthlyPlan:
+      type: object
+      properties:
+        planCounter:
+          type: integer
+          format: int32
+        planId:
+          type: integer
+          format: int32
+        planMonth:
+          type: integer
+          format: int32
+    MroWipResponse:
+      type: object
+      description: Work In Progress schema.
+      properties:
+        actualAssetCompleteDate:
+          type: string
+          format: date
+        actualCoreAssemblyDate:
+          type: string
+          format: date
+        actualGate1CloseDate:
+          type: string
+          format: date
+        actualGate3CloseDate:
+          type: string
+          format: date
+        actualGate3CompleteDate:
+          type: string
+          format: date
+        actualGate3StartDate:
+          type: string
+          format: date
+        actualInductDate:
+          type: string
+          format: date
+        actualKitCompleteDate:
+          type: string
+          format: date
+        actualReceiptDate:
+          type: string
+          format: date
+        actualReceiveDate:
+          type: string
+          format: date
+        actualRemovalDate:
+          type: string
+          format: date
+        actualShipDate:
+          type: string
+          format: date
+        actualShipToCustDate:
+          type: string
+          format: date
+        actualTestCompleteDate:
+          type: string
+          format: date
+        actualTestStartDate:
+          type: string
+          format: date
+        contractDate:
+          type: string
+          format: date
+        esn:
+          type: string
+        eventId:
+          type: integer
+          format: int32
+        externalAssetCompleteDate:
+          type: string
+          format: date
+        externalContractDate:
+          type: string
+          format: date
+        externalCoreAssemblyDate:
+          type: string
+          format: date
+        externalGate1CloseDate:
+          type: string
+          format: date
+        externalGate3CloseDate:
+          type: string
+          format: date
+        externalGate3StartDate:
+          type: string
+          format: date
+        externalInductDate:
+          type: string
+          format: date
+        externalKitCompleteDate:
+          type: string
+          format: date
+        externalReceiptDate:
+          type: string
+          format: date
+        externalReceiveDate:
+          type: string
+          format: date
+        externalShipDate:
+          type: string
+          format: date
+        externalShipToCustDate:
+          type: string
+          format: date
+        externalTestCompleteDate:
+          type: string
+          format: date
+        externalTestStartDate:
+          type: string
+          format: date
+        planAssetCompleteDate:
+          type: string
+          format: date
+        planCoreAssemblyDate:
+          type: string
+          format: date
+        planGate1CloseDate:
+          type: string
+          format: date
+        planGate3CloseDate:
+          type: string
+          format: date
+        planGate3StartDate:
+          type: string
+          format: date
+        planInductDate:
+          type: string
+          format: date
+        planKitCompleteDate:
+          type: string
+          format: date
+        planReceiptDate:
+          type: string
+          format: date
+        planReceiveDate:
+          type: string
+          format: date
+        planRemovalDate:
+          type: string
+          format: date
+        planShipDate:
+          type: string
+          format: date
+        planShipToCustDate:
+          type: string
+          format: date
+        planTestCompleteDate:
+          type: string
+          format: date
+        planTestStartDate:
+          type: string
+          format: date
+        smi:
+          type: string
+    MroWorkOrderRequest:
+      type: object
+      description: Update work order schema.
+      properties:
+        esn:
+          type: string
+        eventId:
+          type: integer
+          format: int32
+        mroShopCode:
+          type: string
+        mroWorkOrder:
+          type: string
+      required:
+      - esn
+      - eventId
+      - mroShopCode
+      - mroWorkOrder
+    OdinDTO:
+      type: object
+      description: ODIN Data Model
+      properties:
+        accyDeliveryDate:
+          type: string
+          format: date
+        actualRecEbuDate:
+          type: string
+          format: date
+        actualRecEcDate:
+          type: string
+          format: date
+        adListDate:
+          type: string
+          format: date
+        aimAllocationDate:
+          type: string
+          format: date
+        assetId:
+          type: integer
+          format: int32
+        ber:
+          type: boolean
+        cfdFm:
+          type: string
+          maxLength: 50
+          minLength: 0
+        changeReason:
+          type: string
+          maxLength: 40
+          minLength: 0
+        comments:
+          type: string
+          maxLength: 4000
+          minLength: 0
+        committedInductionDate:
+          type: string
+          format: date
+        contractRemoval:
+          type: boolean
+        contractType:
+          type: string
+        csn:
+          type: integer
+          format: int32
+        cso:
+          type: integer
+          format: int32
+        currentLocation:
+          type: string
+          maxLength: 50
+          minLength: 0
+        customerApprovalDate:
+          type: string
+          format: date
+        ebuShop:
+          type: string
+          maxLength: 50
+          minLength: 0
+        engineActualReceiptDate:
+          type: string
+          format: date
+        engineId:
+          type: integer
+          format: int32
+        engineModelName:
+          type: string
+        esn:
+          type: string
+          maxLength: 10
+          minLength: 0
+        eventId:
+          type: integer
+          format: int32
+        fanBladeMapDate:
+          type: string
+          format: date
+        fhaEligible:
+          type: boolean
+        investigationEngine:
+          type: boolean
+        llpCycRemain:
+          type: integer
+          format: int32
+        llpDeliveryDate:
+          type: string
+          format: date
+        llpReplacementType:
+          type: string
+          maxLength: 50
+          minLength: 0
+        maintenanceCenter:
+          type: string
+          maxLength: 10
+          minLength: 0
+        maintenanceCenterName:
+          type: string
+          maxLength: 40
+          minLength: 0
+        nisDeliveryDate:
+          type: string
+          format: date
+        odinId:
+          type: integer
+          format: int32
+        onHold:
+          type: boolean
+        operatorName:
+          type: string
+        opportunity:
+          type: integer
+          format: int32
+        powerEngineer:
+          type: string
+          maxLength: 50
+          minLength: 0
+        preliminaryInductionDate:
+          type: string
+          format: date
+        preliminaryInductionDates:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreliminaryIndDateReason'
+        projRecEbuDate:
+          type: string
+          format: date
+        projRecEcDate:
+          type: string
+          format: date
+        pwelAsset:
+          type: boolean
+        removalActualDate:
+          type: string
+          format: date
+        removalReason:
+          type: string
+        removalRecordedDate:
+          type: string
+          format: date
+        removedEngineId:
+          type: integer
+          format: int32
+        rslPO:
+          type: string
+          maxLength: 50
+          minLength: 0
+        slotDate:
+          type: string
+          format: date
+        slotUpdatedDate:
+          type: string
+          format: date
+        slotUpdatedUserFirstName:
+          type: string
+        slotUpdatedUserLastName:
+          type: string
+        speidPO:
+          type: string
+          maxLength: 50
+          minLength: 0
+        svClassification:
+          type: string
+          maxLength: 50
+          minLength: 0
+        testAtReceipt:
+          type: string
+          format: date
+        thrust:
+          type: string
+        tsn:
+          type: integer
+          format: int32
+        tso:
+          type: integer
+          format: int32
+        upgradeEligibility:
+          type: string
+          maxLength: 50
+          minLength: 0
+        warranty:
+          type: boolean
+        workOrder:
+          type: string
+          maxLength: 25
+          minLength: 0
+        wsDraftCompleteAccyDate:
+          type: string
+          format: date
+        wsDraftCompleteEngDate:
+          type: string
+          format: date
+        wsInitiationDate:
+          type: string
+          format: date
+        wsOrigReleaseDate:
+          type: string
+          format: date
+      required:
+      - assetId
+      - esn
+    OdinDetailsRequest:
+      type: object
+      properties:
+        engineAssetId:
+          type: integer
+          format: int32
+        engineId:
+          type: integer
+          format: int32
+        esn:
+          type: string
+        eventId:
+          type: integer
+          format: int32
+        odinId:
+          type: integer
+          format: int32
+        removedEngineId:
+          type: integer
+          format: int32
+      required:
+      - engineAssetId
+      - esn
+    OdinReportData:
+      type: object
+      properties:
+        days:
+          type: integer
+          format: int64
+        days2:
+          type: integer
+          format: int64
+        engtrackIndDate:
+          type: string
+          format: date
+        esn:
+          type: string
+    OdinReportResponse:
+      type: object
+      properties:
+        remToEngDeliveryList:
+          type: array
+          items:
+            $ref: '#/components/schemas/OdinReportData'
+        remToLppAccList:
+          type: array
+          items:
+            $ref: '#/components/schemas/OdinReportData'
+        wsApprovalList:
+          type: array
+          items:
+            $ref: '#/components/schemas/OdinReportData'
+        wsDraftingList:
+          type: array
+          items:
+            $ref: '#/components/schemas/OdinReportData'
+    OdinRequest:
+      type: object
+      properties:
+        contractTypes:
+          type: array
+          items:
+            type: string
+        engineTypeId:
+          type: string
+        fromDate:
+          type: string
+          format: date
+        toDate:
+          type: string
+          format: date
+      required:
+      - engineTypeId
+      - fromDate
+      - toDate
+    PacingItem:
+      type: object
+      properties:
+        category:
+          type: string
+          maxLength: 20
+          minLength: 1
+        closeDate:
+          type: string
+          format: date
+        commitDate:
+          type: string
+          format: date
+        description:
+          type: string
+          maxLength: 50
+          minLength: 0
+        dollarsSaved:
+          type: integer
+          format: int32
+        engineId:
+          type: integer
+          format: int32
+        engineSN:
+          type: string
+          maxLength: 10
+          minLength: 1
+        holdDaysApproved:
+          type: integer
+          format: int32
+        logDate:
+          type: string
+          format: date
+        needDate:
+          type: string
+          format: date
+        notes:
+          type: string
+          maxLength: 2000
+          minLength: 0
+        pacingId:
+          type: integer
+          format: int32
+        partId:
+          type: string
+          maxLength: 20
+          minLength: 0
+        purchaseOrder:
+          type: string
+          maxLength: 10
+          minLength: 0
+        startDate:
+          type: string
+          format: date
+        subCategory:
+          type: string
+        uniqueId:
+          type: string
+          maxLength: 20
+          minLength: 0
+        wsInd:
+          type: string
+      required:
+      - category
+      - engineId
+      - engineSN
+    PacingItemResponse:
+      type: object
+      properties:
+        pacingItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/PacingItem'
+      required:
+      - pacingItems
+    PreliminaryIndDateReason:
+      type: object
+      properties:
+        changeReason:
+          type: string
+        inductionDate:
+          type: string
+          format: date
+    ProfileResponse:
+      type: object
+      properties:
+        defaultEngineCenter:
+          type: string
+        defaultEngineType:
+          type: string
+        defaultPage:
+          type: string
+        pageNames:
+          type: array
+          items:
+            type: string
+            enum:
+            - ADMINISTRATOR
+            - CALENDAR
+            - HOME
+            - MANAGEMENT
+            - PLANNING
+            - REPORTING
+    QuarterlyDatesResponse:
+      type: object
+      properties:
+        months:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonthlyDatesResponse'
+        quarter:
+          type: integer
+          format: int32
+        quarterName:
+          type: string
+        year:
+          type: integer
+          format: int32
+    ShopVisitType:
+      type: string
+      enum:
+      - "1"
+      - "2"
+      - "3"
+      - "4"
+      - "5"
+    SlotEngine:
+      type: object
+      properties:
+        customerID:
+          type: string
+        customerName:
+          type: string
+        customerShortName:
+          type: string
+        engineGroupID:
+          type: string
+        engineID:
+          type: integer
+          format: int32
+        engineModelID:
+          type: string
+        esn:
+          type: string
+    SmiResponse:
+      type: object
+      properties:
+        engineGroupId:
+          type: string
+        engineId:
+          type: integer
+          format: int32
+        engineSN:
+          type: string
+        smiRevisions:
+          type: array
+          items:
+            $ref: '#/components/schemas/SmiRevisions'
+      required:
+      - smiRevisions
+    SmiRevision:
+      type: object
+      properties:
+        moduleGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModuleBuildGroup'
+        smiDesc:
+          type: string
+          maxLength: 100
+          minLength: 1
+        smiId:
+          type: integer
+          format: int32
+        smiRev:
+          type: string
+          maxLength: 10
+          minLength: 1
+        smiRevDate:
+          type: string
+          format: date
+      required:
+      - smiDesc
+      - smiRev
+      - smiRevDate
+    SmiRevisions:
+      type: object
+      properties:
+        engGroupId:
+          type: string
+        engId:
+          type: integer
+          format: int32
+        engineRevisions:
+          type: array
+          items:
+            $ref: '#/components/schemas/SmiRevision'
+        engineSN:
+          type: string
+          maxLength: 10
+          minLength: 1
+      required:
+      - engId
+      - engineRevisions
+      - engineSN
+    SuccessResponse:
+      type: object
+      properties:
+        result:
+          type: string
+    UpdateManualEngineRequest:
+      type: object
+      properties:
+        category:
+          type: string
+        customerID:
+          type: string
+        esn:
+          type: string
+        salesOrderType:
+          type: string
+    UpdateModuleRequest:
+      type: object
+      properties:
+        customerID:
+          type: string
+        esn:
+          type: string
+    UpdateSlotRequest:
+      type: object
+      properties:
+        shopVisitType:
+          $ref: '#/components/schemas/ShopVisitType'
+        subShopVisitType:
+          type: string
+    UserProfile:
+      type: object
+      properties:
+        accountNonExpired:
+          type: boolean
+        accountNonLocked:
+          type: boolean
+        authorities:
+          type: array
+          items:
+            $ref: '#/components/schemas/GrantedAuthority'
+        comments:
+          type: string
+        credentialsNonExpired:
+          type: boolean
+        defaultEngineCenterID:
+          type: string
+          description: The users assigned default engine center.
+        defaultEngineTypeID:
+          type: string
+        defaultLoadPage:
+          type: string
+        emailAddress:
+          type: string
+        enabled:
+          type: boolean
+        firstName:
+          type: string
+        justification:
+          type: string
+        lastName:
+          type: string
+        password:
+          type: string
+        roleId:
+          type: string
+        status:
+          type: string
+        updateDate:
+          type: string
+          format: date-time
+        updateUser:
+          type: string
+        userEngineCenters:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserProfileEngineCenter'
+        userNetManagement:
+          type: boolean
+        userRCM:
+          type: boolean
+        username:
+          type: string
+    UserProfileEngineCenter:
+      type: object
+      properties:
+        engineCenterID:
+          type: string
+        engineCenterName:
+          type: string
+        engineGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserProfileEngineGroup'
+      required:
+      - engineCenterID
+      - engineCenterName
+      - engineGroups
+    UserProfileEngineGroup:
+      type: object
+      properties:
+        engineGroupID:
+          type: string
+        engineGroupName:
+          type: string
+        engineTypeID:
+          type: string
+        engineTypeName:
+          type: string
+      required:
+      - engineGroupID
+      - engineGroupName
+      - engineTypeID
+      - engineTypeName
+    UserProfileResponse:
+      type: object
+      description: User Profile
+      properties:
+        businessJustification:
+          type: string
+        comments:
+          type: string
+        defaultEngineCenterID:
+          type: string
+        defaultEngineTypeID:
+          type: string
+        defaultLoadPage:
+          type: string
+        emailAddress:
+          type: string
+        firstName:
+          type: string
+          maxLength: 35
+          minLength: 1
+        lastName:
+          type: string
+          maxLength: 35
+          minLength: 1
+        lastUpdateDate:
+          type: string
+          format: date-time
+        netManagement:
+          type: boolean
+        rcm:
+          type: boolean
+        securityRole:
+          type: string
+          pattern: Administrator|Read|ReadWrite
+        status:
+          type: string
+        userEngineCenters:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserProfileEngineCenter'
+      required:
+      - firstName
+      - lastName
+      - securityRole
+      - userEngineCenters
+    WorkInProgress:
+      type: object
+      properties:
+        engExternalAssetCompleteDate:
+          type: string
+          format: date
+        engineActualAssetCompleteDate:
+          type: string
+          format: date
+        engineActualCoreAssemblyDate:
+          type: string
+          format: date
+        engineActualGate1CloseDate:
+          type: string
+          format: date
+        engineActualGate3CloseDate:
+          type: string
+          format: date
+        engineActualGate3CompleteDate:
+          type: string
+          format: date
+        engineActualGate3StartDate:
+          type: string
+          format: date
+        engineActualInductDate:
+          type: string
+          format: date
+        engineActualKitCompleteDate:
+          type: string
+          format: date
+        engineActualReceiptDate:
+          type: string
+          format: date
+        engineActualReceiveDate:
+          type: string
+          format: date
+        engineActualRemovalDate:
+          type: string
+          format: date
+        engineActualShipDate:
+          type: string
+          format: date
+        engineActualShipToCustDate:
+          type: string
+          format: date
+        engineActualTestCompleteDate:
+          type: string
+          format: date
+        engineActualTestStartDate:
+          type: string
+          format: date
+        engineAssetId:
+          type: integer
+          format: int32
+        engineCategory:
+          type: string
+          maxLength: 3
+          minLength: 0
+        engineCenterId:
+          type: string
+        engineCenterName:
+          type: string
+        engineContractDate:
+          type: string
+          format: date
+        engineEventId:
+          type: integer
+          format: int32
+        engineExternalContractDate:
+          type: string
+          format: date
+        engineExternalCoreAssemblyDate:
+          type: string
+          format: date
+        engineExternalGate1CloseDate:
+          type: string
+          format: date
+        engineExternalGate3CloseDate:
+          type: string
+          format: date
+        engineExternalGate3StartDate:
+          type: string
+          format: date
+        engineExternalInductDate:
+          type: string
+          format: date
+        engineExternalKitCompleteDate:
+          type: string
+          format: date
+        engineExternalReceiptDate:
+          type: string
+          format: date
+        engineExternalReceiveDate:
+          type: string
+          format: date
+        engineExternalShipDate:
+          type: string
+          format: date
+        engineExternalShipToCustDate:
+          type: string
+          format: date
+        engineExternalTestCompleteDate:
+          type: string
+          format: date
+        engineExternalTestStartDate:
+          type: string
+          format: date
+        engineGroupId:
+          type: string
+        engineGroupName:
+          type: string
+        engineId:
+          type: integer
+          format: int32
+        engineModelId:
+          type: string
+        engineModelName:
+          type: string
+        engineModuleId:
+          type: string
+        engineModuleName:
+          type: string
+        engineNotifyNumber:
+          type: string
+        engineOperator:
+          type: string
+        enginePlanAssetCompleteDate:
+          type: string
+          format: date
+        enginePlanCoreAssemblyDate:
+          type: string
+          format: date
+        enginePlanGate1CloseDate:
+          type: string
+          format: date
+        enginePlanGate3CloseDate:
+          type: string
+          format: date
+        enginePlanGate3StartDate:
+          type: string
+          format: date
+        enginePlanInductDate:
+          type: string
+          format: date
+        enginePlanKitCompleteDate:
+          type: string
+          format: date
+        enginePlanReceiptDate:
+          type: string
+          format: date
+        enginePlanReceiveDate:
+          type: string
+          format: date
+        enginePlanRemovalDate:
+          type: string
+          format: date
+        enginePlanShipDate:
+          type: string
+          format: date
+        enginePlanShipToCustDate:
+          type: string
+          format: date
+        enginePlanTestCompleteDate:
+          type: string
+          format: date
+        enginePlanTestStartDate:
+          type: string
+          format: date
+        engineSN:
+          type: string
+        engineSalesOrderNumber:
+          type: string
+        engineShipType:
+          type: string
+          maxLength: 1
+          minLength: 0
+        engineTrackingId:
+          type: integer
+          format: int32
+        engineTypeId:
+          type: string
+        engineTypeName:
+          type: string
+        module:
+          type: boolean
+        mroShopCode:
+          type: string
+        parentEsn:
+          type: string
+        removalDate:
+          type: string
+          format: date
+        revenue:
+          type: boolean
+        salesOrderType:
+          type: string
+          maxLength: 5
+          minLength: 0
+        shopVisitNum:
+          type: integer
+          format: int32
+        slotSubshopVisit:
+          type: string
+        slotType:
+          type: string
+        standardAssemblyDate:
+          type: string
+          format: date
+        standardAssetCompleteDate:
+          type: string
+          format: date
+        standardContractDate:
+          type: string
+          format: date
+        standardG1CloseDate:
+          type: string
+          format: date
+        standardG3CloseDate:
+          type: string
+          format: date
+        standardG3StartDate:
+          type: string
+          format: date
+        standardInductionDate:
+          type: string
+          format: date
+        standardKitDate:
+          type: string
+          format: date
+        standardReceiptDate:
+          type: string
+          format: date
+        standardReceiveDate:
+          type: string
+          format: date
+        standardRemoveDate:
+          type: string
+          format: date
+        standardShipDate:
+          type: string
+          format: date
+        standardShipToCustDate:
+          type: string
+          format: date
+        standardTestCompleteDate:
+          type: string
+          format: date
+        standardTestStartDate:
+          type: string
+          format: date
+        warranty:
+          type: boolean
+        workOrder:
+          type: string
+      required:
+      - engineId
+      - engineTrackingId
+    WorkInProgressImportResponse:
+      type: object
+      properties:
+        wip:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              type: object
+    WorkInProgressResponse:
+      type: object
+      properties:
+        wip:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkInProgress'
+      required:
+      - wip
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: jwt
+      description: JWT Bearer Authorization.
+      scheme: bearer
+      type: http
