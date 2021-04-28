@@ -63,26 +63,26 @@
             "content" : {
               "application/json" : {
                 "examples" : {
-                  "Error response when request ESN is null." : {
-                    "description" : "Error response when request ESN is null.",
-                    "summary" : "ESN is null.",
+                  "All request values fail validation." : {
+                    "description" : "All request values fail validation.",
+                    "summary" : "All request values made to fail validation.",
                     "value" : {
                       "status" : "BAD_REQUEST",
                       "statusCode" : 400,
                       "reason" : "Bad Request",
-                      "message" : "Validation failed for argument [0] in public org.springframework.http.ResponseEntity<java.lang.String> com.pw.dome.mro.collab.workorder.MroWorkOrderController.getMroInfo(com.pw.dome.mro.collab.workorder.MroWorkOrderRequest) with 2 errors: [Field error in object 'mroWorkOrderRequest' on field 'mroWorkOrder': rejected value [01234567890]; codes [Length.mroWorkOrderRequest.mroWorkOrder,Length.mroWorkOrder,Length.java.lang.String,Length]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [mroWorkOrderRequest.mroWorkOrder,mroWorkOrder]; arguments []; default message [mroWorkOrder],10,0]; default message [length must be between 0 and 10]] [Field error in object 'mroWorkOrderRequest' on field 'esn': rejected value [null]; codes [NotBlank.mroWorkOrderRequest.esn,NotBlank.esn,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [mroWorkOrderRequest.esn,esn]; arguments []; default message [esn]]; default message [The field may not be blank.]]",
-                      "errors" : [ "mroWorkOrder: length must be between 0 and 10", "esn: The field may not be blank." ]
+                      "message" : "Validation failed for argument [0] in public org.springframework.http.ResponseEntity<java.lang.String> com.pw.dome.mro.collab.workorder.MroWorkOrderController.getMroInfo(com.pw.dome.mro.collab.workorder.MroWorkOrderRequest) with 4 errors: [Field error in object 'mroWorkOrderRequest' on field 'mroShopCode': rejected value [ESAjidjowjdosjdoijsdojsodjsdoisd]; codes [Length.mroWorkOrderRequest.mroShopCode,Length.mroShopCode,Length.java.lang.String,Length]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [mroWorkOrderRequest.mroShopCode,mroShopCode]; arguments []; default message [mroShopCode],10,1]; default message [length must be between 1 and 10]] [Field error in object 'mroWorkOrderRequest' on field 'esn': rejected value [72382112902912912091290120912098u12]; codes [Length.mroWorkOrderRequest.esn,Length.esn,Length.java.lang.String,Length]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [mroWorkOrderRequest.esn,esn]; arguments []; default message [esn],20,1]; default message [length must be between 1 and 20]] [Field error in object 'mroWorkOrderRequest' on field 'eventId': rejected value [-1]; codes [Range.mroWorkOrderRequest.eventId,Range.eventId,Range.java.lang.Integer,Range]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [mroWorkOrderRequest.eventId,eventId]; arguments []; default message [eventId],9223372036854775807,1]; default message [must be between 1 and 9223372036854775807]] [Field error in object 'mroWorkOrderRequest' on field 'mroWorkOrder': rejected value [0123456789mjdoiasjodjnwoidjowdjoidjoihjndo]; codes [Length.mroWorkOrderRequest.mroWorkOrder,Length.mroWorkOrder,Length.java.lang.String,Length]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [mroWorkOrderRequest.mroWorkOrder,mroWorkOrder]; arguments []; default message [mroWorkOrder],25,1]; default message [length must be between 1 and 25]]",
+                      "errors" : [ "mroShopCode: length must be between 1 and 10", "esn: length must be between 1 and 20", "eventId: must be between 1 and 9223372036854775807", "mroWorkOrder: length must be between 1 and 25" ]
                     }
                   },
-                  "Error response when request field length is exceeded." : {
-                    "description" : "Error response when request field length is exceeded.",
-                    "summary" : "MRO work order length exceeds 10.",
+                  "One request value fails validation." : {
+                    "description" : "One request value fails validation.",
+                    "summary" : "One request value is null and fails validation.",
                     "value" : {
                       "status" : "BAD_REQUEST",
                       "statusCode" : 400,
                       "reason" : "Bad Request",
-                      "message" : "Validation failed for argument [0] in public org.springframework.http.ResponseEntity<java.lang.String> com.pw.dome.mro.collab.workorder.MroWorkOrderController.getMroInfo(com.pw.dome.mro.collab.workorder.MroWorkOrderRequest): [Field error in object 'mroWorkOrderRequest' on field 'mroWorkOrder': rejected value [01234567890]; codes [Length.mroWorkOrderRequest.mroWorkOrder,Length.mroWorkOrder,Length.java.lang.String,Length]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [mroWorkOrderRequest.mroWorkOrder,mroWorkOrder]; arguments []; default message [mroWorkOrder],10,0]; default message [length must be between 0 and 10]]",
-                      "errors" : [ "mroWorkOrder: length must be between 0 and 10" ]
+                      "message" : "Validation failed for argument [0] in public org.springframework.http.ResponseEntity<java.lang.String> com.pw.dome.mro.collab.workorder.MroWorkOrderController.getMroInfo(com.pw.dome.mro.collab.workorder.MroWorkOrderRequest): [Field error in object 'mroWorkOrderRequest' on field 'eventId': rejected value [null]; codes [NotNull.mroWorkOrderRequest.eventId,NotNull.eventId,NotNull.java.lang.Integer,NotNull]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [mroWorkOrderRequest.eventId,eventId]; arguments []; default message [eventId]]; default message [The field may not be null.]]",
+                      "errors" : [ "eventId: The field may not be null." ]
                     }
                   }
                 },
@@ -97,9 +97,9 @@
             "content" : {
               "application/json" : {
                 "examples" : {
-                  "Error response when request ESN not matched." : {
-                    "description" : "Error response when request ESN not matched.",
-                    "summary" : "ESN doesn't match.",
+                  "ESN doesn't match." : {
+                    "description" : "ESN doesn't match.",
+                    "summary" : "Error response when request ESN not matched.",
                     "value" : {
                       "status" : "NOT_FOUND",
                       "statusCode" : 404,
@@ -108,9 +108,9 @@
                       "errors" : [ "No matching records to update found. ESN='72382111' has 0 match(es). EventId='4043679' has 1 match(es). ShopCode='ESA' has 3737 match(es). " ]
                     }
                   },
-                  "Error response when request ShopCode not matched." : {
-                    "description" : "Error response when request ShopCode not matched.",
-                    "summary" : "ShopCode doesn't match.",
+                  "ShopCode doesn't match." : {
+                    "description" : "ShopCode doesn't match.",
+                    "summary" : "Error response when request ShopCode not matched.",
                     "value" : {
                       "status" : "NOT_FOUND",
                       "statusCode" : 404,
@@ -170,17 +170,25 @@
         "description" : "Update work order schema.",
         "properties" : {
           "esn" : {
+            "maxLength" : 20,
+            "minLength" : 1,
             "type" : "string"
           },
           "eventId" : {
+            "minimum" : 1,
             "type" : "integer",
             "format" : "int32"
           },
           "mroShopCode" : {
+            "maxLength" : 10,
+            "minLength" : 1,
             "type" : "string"
           },
           "mroWorkOrder" : {
-            "type" : "string"
+            "maxLength" : 25,
+            "minLength" : 1,
+            "type" : "string",
+            "description" : "Named SMI in MRO system."
           }
         },
         "required" : [ "esn", "eventId", "mroShopCode", "mroWorkOrder" ]
