@@ -21,7 +21,7 @@
     "description" : "DBDS Stage",
     "url" : "http://192.168.3.171:82/dome",
     "variables" : { }
-  }, {
+  },{
     "description" : "P&W Stage",
     "url" : "https://dome-ui-test.prattwhitney.com/dome",
     "variables" : { }
