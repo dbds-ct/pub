@@ -8,7 +8,7 @@
     },
     "description" : "RESTful API for Pratt & Whitney DOME Application.",
     "title" : "Digital Overhaul Management of Engines",
-    "version" : "1.0"
+    "version" : "2021-04-28"
   },
   "externalDocs" : {
     "description" : "Project SharePoint"
