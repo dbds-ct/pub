@@ -36,7 +36,7 @@
   "paths" : {
     "/v1/mro-collab/workorder" : {
       "delete" : {
-        "description" : " EngineTracking work order from MRO.",
+        "description" : "Deletes the matching EngineTracking MRO work order.",
         "operationId" : "deleteWorkOrderFromMRO",
         "requestBody" : {
           "content" : {
@@ -70,8 +70,8 @@
                       "status" : "BAD_REQUEST",
                       "statusCode" : 400,
                       "reason" : "Bad Request",
-                      "message" : "Validation failed for argument [0] in public org.springframework.http.ResponseEntity<java.lang.String> com.pw.dome.mro.collab.workorder.MroWorkOrderController.getMroInfo(com.pw.dome.mro.collab.workorder.MroWorkOrderRequest) with 4 errors: [Field error in object 'mroWorkOrderRequest' on field 'mroShopCode': rejected value [ESAjidjowjdosjdoijsdojsodjsdoisd]; codes [Length.mroWorkOrderRequest.mroShopCode,Length.mroShopCode,Length.java.lang.String,Length]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [mroWorkOrderRequest.mroShopCode,mroShopCode]; arguments []; default message [mroShopCode],10,1]; default message [length must be between 1 and 10]] [Field error in object 'mroWorkOrderRequest' on field 'esn': rejected value [72382112902912912091290120912098u12]; codes [Length.mroWorkOrderRequest.esn,Length.esn,Length.java.lang.String,Length]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [mroWorkOrderRequest.esn,esn]; arguments []; default message [esn],20,1]; default message [length must be between 1 and 20]] [Field error in object 'mroWorkOrderRequest' on field 'eventId': rejected value [-1]; codes [Range.mroWorkOrderRequest.eventId,Range.eventId,Range.java.lang.Integer,Range]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [mroWorkOrderRequest.eventId,eventId]; arguments []; default message [eventId],9223372036854775807,1]; default message [must be between 1 and 9223372036854775807]] [Field error in object 'mroWorkOrderRequest' on field 'mroWorkOrder': rejected value [0123456789mjdoiasjodjnwoidjowdjoidjoihjndo]; codes [Length.mroWorkOrderRequest.mroWorkOrder,Length.mroWorkOrder,Length.java.lang.String,Length]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [mroWorkOrderRequest.mroWorkOrder,mroWorkOrder]; arguments []; default message [mroWorkOrder],25,1]; default message [length must be between 1 and 25]]",
-                      "errors" : [ "mroShopCode: length must be between 1 and 10", "esn: length must be between 1 and 20", "eventId: must be between 1 and 9223372036854775807", "mroWorkOrder: length must be between 1 and 25" ]
+                      "message" : "Validation failed for argument [0] in public org.springframework.http.ResponseEntity<?> com.pw.dome.mro.collab.workorder.MroWorkOrderController.deleteWorkOrderFromMRO(com.pw.dome.mro.collab.workorder.MroWorkOrderDeleteRequest) with 3 errors: [Field error in object 'mroWorkOrderDeleteRequest' on field 'mroShopCode': rejected value [ESAdskndsduhsudhisuhdshdshdhsdsdhishdis]; codes [Size.mroWorkOrderDeleteRequest.mroShopCode,Size.mroShopCode,Size.java.lang.String,Size]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [mroWorkOrderDeleteRequest.mroShopCode,mroShopCode]; arguments []; default message [mroShopCode],10,1]; default message [size must be between 1 and 10]] [Field error in object 'mroWorkOrderDeleteRequest' on field 'eventId': rejected value [-1]; codes [Min.mroWorkOrderDeleteRequest.eventId,Min.eventId,Min.java.lang.Integer,Min]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [mroWorkOrderDeleteRequest.eventId,eventId]; arguments []; default message [eventId],1]; default message [must be greater than or equal to 1]] [Field error in object 'mroWorkOrderDeleteRequest' on field 'esn': rejected value [723821odaauasashashashahsuhaushuahsasas]; codes [Size.mroWorkOrderDeleteRequest.esn,Size.esn,Size.java.lang.String,Size]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [mroWorkOrderDeleteRequest.esn,esn]; arguments []; default message [esn],20,1]; default message [size must be between 1 and 20]]",
+                      "errors" : [ "mroShopCode: size must be between 1 and 10", "eventId: must be greater than or equal to 1", "esn: size must be between 1 and 20" ]
                     }
                   },
                   "One request value fails validation." : {
@@ -81,8 +81,8 @@
                       "status" : "BAD_REQUEST",
                       "statusCode" : 400,
                       "reason" : "Bad Request",
-                      "message" : "Validation failed for argument [0] in public org.springframework.http.ResponseEntity<java.lang.String> com.pw.dome.mro.collab.workorder.MroWorkOrderController.getMroInfo(com.pw.dome.mro.collab.workorder.MroWorkOrderRequest): [Field error in object 'mroWorkOrderRequest' on field 'eventId': rejected value [null]; codes [NotNull.mroWorkOrderRequest.eventId,NotNull.eventId,NotNull.java.lang.Integer,NotNull]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [mroWorkOrderRequest.eventId,eventId]; arguments []; default message [eventId]]; default message [The field may not be null.]]",
-                      "errors" : [ "eventId: The field may not be null." ]
+                      "message" : "Validation failed for argument [0] in public org.springframework.http.ResponseEntity<?> com.pw.dome.mro.collab.workorder.MroWorkOrderController.deleteWorkOrderFromMRO(com.pw.dome.mro.collab.workorder.MroWorkOrderDeleteRequest): [Field error in object 'mroWorkOrderDeleteRequest' on field 'eventId': rejected value [null]; codes [NotNull.mroWorkOrderDeleteRequest.eventId,NotNull.eventId,NotNull.java.lang.Integer,NotNull]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [mroWorkOrderDeleteRequest.eventId,eventId]; arguments []; default message [eventId]]; default message [must not be null]]",
+                      "errors" : [ "eventId: must not be null" ]
                     }
                   }
                 },
@@ -97,15 +97,15 @@
             "content" : {
               "application/json" : {
                 "examples" : {
-                  "ESN doesn't match." : {
-                    "description" : "ESN doesn't match.",
-                    "summary" : "Error response when request ESN not matched.",
+                  "EventId doesn't match." : {
+                    "description" : "EventId doesn't match.",
+                    "summary" : "Error response when request EventId not matched.",
                     "value" : {
                       "status" : "NOT_FOUND",
                       "statusCode" : 404,
                       "reason" : "Not Found",
-                      "message" : "No matching records to update found. ESN='72382111' has 0 match(es). EventId='4043679' has 1 match(es). ShopCode='ESA' has 3737 match(es). ",
-                      "errors" : [ "No matching records to update found. ESN='72382111' has 0 match(es). EventId='4043679' has 1 match(es). ShopCode='ESA' has 3737 match(es). " ]
+                      "message" : "No matching records to update found. ESN='723821' has 1 match(es). EventId='40436799' has 0 match(es). ShopCode='ESA' has 3737 match(es). ",
+                      "errors" : [ "No matching records to update found. ESN='723821' has 1 match(es). EventId='40436799' has 0 match(es). ShopCode='ESA' has 3737 match(es). " ]
                     }
                   },
                   "ShopCode doesn't match." : {
@@ -131,7 +131,7 @@
         "tags" : [ "MRO Collab" ]
       },
       "post" : {
-        "description" : "Updates the EngineTracking work order from MRO.",
+        "description" : "Updates the matching EngineTracking record with the MRO work order.",
         "operationId" : "updateWorkOrderFromMRO",
         "requestBody" : {
           "content" : {
