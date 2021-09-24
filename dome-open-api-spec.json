@@ -77,7 +77,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/CommentResponse"
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             },
@@ -115,7 +115,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/PacingItemResponse"
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             },
@@ -330,7 +330,7 @@
           },
           "dateUpdated" : {
             "type" : "string",
-            "format" : "date-time"
+            "format" : "date"
           },
           "external" : {
             "type" : "boolean"

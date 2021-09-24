@@ -56,7 +56,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CommentResponse'
+                $ref: '#/components/schemas/ErrorResponse'
           description: Not Found
       tags:
       - MRO Collab
@@ -82,7 +82,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PacingItemResponse'
+                $ref: '#/components/schemas/ErrorResponse'
           description: Not Found
       tags:
       - MRO Collab
@@ -323,7 +323,7 @@ components:
           format: int32
         dateUpdated:
           type: string
-          format: date-time
+          format: date
         external:
           type: boolean
         logEmail:
