@@ -8,7 +8,7 @@
     },
     "description" : "RESTful API for Pratt & Whitney DOME Application.",
     "title" : "Digital Overhaul Management of Engines",
-    "version" : "2021-04-28"
+    "version" : "2021-09-24"
   },
   "externalDocs" : {
     "description" : "Project SharePoint"
@@ -85,52 +85,6 @@
           }
         },
         "tags" : [ "MRO Collab" ]
-      },
-      "put" : {
-        "description" : "Updates the supplied comment record.",
-        "operationId" : "updateEngineComments_1",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "engine-id",
-          "required" : true,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int64"
-          }
-        } ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/Comment"
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "200" : {
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Comment"
-                }
-              }
-            },
-            "description" : "Updates comment record matching the commentId and engineId."
-          },
-          "404" : {
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Comment"
-                }
-              }
-            },
-            "description" : "Not Found"
-          }
-        },
-        "tags" : [ "MRO Collab" ]
       }
     },
     "/v1/mro-collab/pacing-items/{engine-id}" : {
@@ -162,52 +116,6 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/PacingItemResponse"
-                }
-              }
-            },
-            "description" : "Not Found"
-          }
-        },
-        "tags" : [ "MRO Collab" ]
-      },
-      "put" : {
-        "description" : "Updates the supplied comment record.",
-        "operationId" : "updateEngineComments",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "engine-id",
-          "required" : true,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int64"
-          }
-        } ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/PacingItem"
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "200" : {
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/PacingItem"
-                }
-              }
-            },
-            "description" : "Updates pacing-item record matching the pacingId and engineId."
-          },
-          "404" : {
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/PacingItem"
                 }
               }
             },
@@ -412,7 +320,7 @@
   },
   "components" : {
     "schemas" : {
-      "Comment" : {
+      "CommentDTO" : {
         "type" : "object",
         "description" : "Comment DTO schema.",
         "properties" : {
@@ -446,7 +354,7 @@
           "comments" : {
             "type" : "array",
             "items" : {
-              "$ref" : "#/components/schemas/Comment"
+              "$ref" : "#/components/schemas/CommentDTO"
             }
           },
           "engineId" : {
@@ -537,7 +445,7 @@
         },
         "required" : [ "esn", "eventId", "mroShopCode", "mroWorkOrder" ]
       },
-      "PacingItem" : {
+      "PacingItemDTO" : {
         "type" : "object",
         "description" : "PacingItem DTO schema.",
         "properties" : {
@@ -553,6 +461,10 @@
           "commitDate" : {
             "type" : "string",
             "format" : "date"
+          },
+          "createDateTime" : {
+            "type" : "string",
+            "format" : "date-time"
           },
           "datReceivedDate" : {
             "type" : "string",
@@ -587,10 +499,6 @@
             "type" : "integer",
             "format" : "int32"
           },
-          "logDateTime" : {
-            "type" : "string",
-            "format" : "date-time"
-          },
           "needDate" : {
             "type" : "string",
             "format" : "date"
@@ -618,7 +526,7 @@
             "type" : "string",
             "format" : "date"
           },
-          "subCategory" : {
+          "subcategory" : {
             "maxLength" : 20,
             "minLength" : 0,
             "type" : "string"
@@ -659,7 +567,7 @@
           "pacingItems" : {
             "type" : "array",
             "items" : {
-              "$ref" : "#/components/schemas/PacingItem"
+              "$ref" : "#/components/schemas/PacingItemDTO"
             }
           }
         },
