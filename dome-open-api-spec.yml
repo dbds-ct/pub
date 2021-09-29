@@ -22,18 +22,6 @@ tags:
 - description: "MRO (maintenance, repair and operations) Collaboration API."
   name: MRO Collab
 paths:
-  /v1/foo:
-    get:
-      operationId: getProfile
-      responses:
-        "200":
-          content:
-            '*/*':
-              schema:
-                type: string
-          description: OK
-      tags:
-      - test-controller
   /v1/mro-collab/comments:
     delete:
       description: Sample MRO API to delete the matching Comment record.
@@ -110,15 +98,8 @@ paths:
       - MRO Collab
   /v1/mro-collab/pacing-items/{engine-id}:
     put:
-      description: Updates the supplied comment record.
+      description: Sample MRO API to update the PacingItem record.
       operationId: updateEngineComments
-      parameters:
-      - in: path
-        name: engine-id
-        required: true
-        schema:
-          type: integer
-          format: int64
       requestBody:
         content:
           application/json:
