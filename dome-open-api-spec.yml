@@ -38,7 +38,7 @@ paths:
             application/json:
               schema:
                 type: object
-          description: Deletes the matching record.
+          description: Successfully deleted the matching record.
         "404":
           content:
             application/json:
@@ -62,7 +62,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MroComment'
-          description: Updates comment record matching the commentId and engineId.
+          description: Successfully updated the matching comment record.
         "404":
           content:
             application/json:
@@ -87,7 +87,7 @@ paths:
             application/json:
               schema:
                 type: object
-          description: Deletes matching record.
+          description: Successfully deleted the matching record.
         "404":
           content:
             application/json:
@@ -112,7 +112,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MroPacingItem'
-          description: Updates pacing-item record matching the pacingId and engineId.
+          description: Successfully updated the matching pacing-item record.
         "404":
           content:
             application/json:
