@@ -8,7 +8,7 @@
     },
     "description" : "RESTful API for Pratt & Whitney DOME Application.",
     "title" : "Digital Overhaul Management of Engines",
-    "version" : "2021-09-24"
+    "version" : "2021-09-28"
   },
   "externalDocs" : {
     "description" : "Project SharePoint"
@@ -49,35 +49,112 @@
         "tags" : [ "test-controller" ]
       }
     },
-    "/v1/mro-collab/comments/{engine-id}" : {
-      "get" : {
-        "description" : "Returns the matching comment record(s).",
-        "operationId" : "getEngineComments_1",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "engine-id",
-          "required" : true,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int32"
-          }
-        } ],
+    "/v1/mro-collab/comments" : {
+      "delete" : {
+        "description" : "Sample MRO API to delete the matching Comment record.",
+        "operationId" : "updateEngineComments_3",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MroCommentDeleteRequest"
+              }
+            }
+          },
+          "required" : true
+        },
         "responses" : {
-          "200" : {
+          "204" : {
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/CommentResponse"
+                  "type" : "object"
                 }
               }
             },
-            "description" : "Returned comment record(s) matching the supplied engineId."
+            "description" : "Deletes the matching record."
           },
           "404" : {
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Not Found"
+          }
+        },
+        "tags" : [ "MRO Collab" ]
+      },
+      "post" : {
+        "description" : "Sample MRO API to update the supplied comment record.",
+        "operationId" : "updateEngineComments_1",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MroComment"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MroComment"
+                }
+              }
+            },
+            "description" : "Updates comment record matching the commentId and engineId."
+          },
+          "404" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MroComment"
+                }
+              }
+            },
+            "description" : "Not Found"
+          }
+        },
+        "tags" : [ "MRO Collab" ]
+      }
+    },
+    "/v1/mro-collab/pacing-items" : {
+      "delete" : {
+        "description" : "Sample MRO API to delete the matching PacingItem record.",
+        "operationId" : "updateEngineComments_2",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MroPacingItemDeleteRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Deletes matching record."
+          },
+          "404" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object"
                 }
               }
             },
@@ -88,34 +165,44 @@
       }
     },
     "/v1/mro-collab/pacing-items/{engine-id}" : {
-      "get" : {
-        "description" : "Returns the matching pacing-item record(s).",
-        "operationId" : "getEngineComments",
+      "put" : {
+        "description" : "Updates the supplied comment record.",
+        "operationId" : "updateEngineComments",
         "parameters" : [ {
           "in" : "path",
           "name" : "engine-id",
           "required" : true,
           "schema" : {
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int64"
           }
         } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MroPacingItem"
+              }
+            }
+          },
+          "required" : true
+        },
         "responses" : {
           "200" : {
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/PacingItemResponse"
+                  "$ref" : "#/components/schemas/MroPacingItem"
                 }
               }
             },
-            "description" : "Returned pacing-item record(s) matching the supplied engineId."
+            "description" : "Updates pacing-item record matching the pacingId and engineId."
           },
           "404" : {
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
+                  "$ref" : "#/components/schemas/MroPacingItem"
                 }
               }
             },
@@ -320,50 +407,6 @@
   },
   "components" : {
     "schemas" : {
-      "CommentDTO" : {
-        "type" : "object",
-        "description" : "Comment DTO schema.",
-        "properties" : {
-          "commentId" : {
-            "type" : "integer",
-            "format" : "int32"
-          },
-          "dateUpdated" : {
-            "type" : "string",
-            "format" : "date"
-          },
-          "external" : {
-            "type" : "boolean"
-          },
-          "logEmail" : {
-            "maxLength" : 50,
-            "minLength" : 1,
-            "type" : "string"
-          },
-          "notes" : {
-            "maxLength" : 2000,
-            "minLength" : 1,
-            "type" : "string"
-          }
-        },
-        "required" : [ "commentId", "dateUpdated", "external", "logEmail", "notes" ]
-      },
-      "CommentResponse" : {
-        "type" : "object",
-        "properties" : {
-          "comments" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/CommentDTO"
-            }
-          },
-          "engineId" : {
-            "type" : "integer",
-            "format" : "int32"
-          }
-        },
-        "required" : [ "comments", "engineId" ]
-      },
       "ErrorResponse" : {
         "type" : "object",
         "description" : "Error response schema.",
@@ -394,6 +437,361 @@
             "format" : "int32"
           }
         }
+      },
+      "MroComment" : {
+        "type" : "object",
+        "description" : "Comment DTO schema.",
+        "properties" : {
+          "commentId" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "dateUpdated" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "engineId" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "esn" : {
+            "maxLength" : 20,
+            "minLength" : 1,
+            "type" : "string"
+          },
+          "eventId" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "external" : {
+            "type" : "boolean"
+          },
+          "logEmail" : {
+            "maxLength" : 50,
+            "minLength" : 1,
+            "type" : "string"
+          },
+          "mroShopCode" : {
+            "maxLength" : 10,
+            "minLength" : 1,
+            "type" : "string"
+          },
+          "mroWorkOrder" : {
+            "maxLength" : 25,
+            "minLength" : 1,
+            "type" : "string",
+            "description" : "Named SMI in MRO system."
+          },
+          "notes" : {
+            "maxLength" : 2000,
+            "minLength" : 1,
+            "type" : "string"
+          }
+        },
+        "required" : [ "commentId", "dateUpdated", "engineId", "esn", "eventId", "external", "logEmail", "mroShopCode", "mroWorkOrder", "notes" ]
+      },
+      "MroCommentDeleteRequest" : {
+        "type" : "object",
+        "description" : "Comment delete request schema.",
+        "properties" : {
+          "commentId" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "engineId" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "esn" : {
+            "maxLength" : 20,
+            "minLength" : 1,
+            "type" : "string"
+          },
+          "eventId" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "mroShopCode" : {
+            "maxLength" : 10,
+            "minLength" : 1,
+            "type" : "string"
+          },
+          "mroWorkOrder" : {
+            "maxLength" : 25,
+            "minLength" : 1,
+            "type" : "string",
+            "description" : "Named SMI in MRO system."
+          }
+        },
+        "required" : [ "commentId", "engineId", "esn", "eventId", "mroShopCode", "mroWorkOrder" ]
+      },
+      "MroPacingItem" : {
+        "type" : "object",
+        "description" : "PacingItem DTO schema.",
+        "properties" : {
+          "category" : {
+            "maxLength" : 20,
+            "minLength" : 0,
+            "type" : "string"
+          },
+          "closeDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "commitDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "datReceivedDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "datShipOutDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "description" : {
+            "maxLength" : 50,
+            "minLength" : 0,
+            "type" : "string"
+          },
+          "dollarsSaved" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "engineId" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "engineSN" : {
+            "maxLength" : 10,
+            "minLength" : 1,
+            "type" : "string"
+          },
+          "escItem" : {
+            "type" : "boolean"
+          },
+          "esn" : {
+            "maxLength" : 20,
+            "minLength" : 1,
+            "type" : "string"
+          },
+          "eventId" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "holdDaysApproved" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "logDateTime" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "mroShopCode" : {
+            "maxLength" : 10,
+            "minLength" : 1,
+            "type" : "string"
+          },
+          "mroWorkOrder" : {
+            "maxLength" : 25,
+            "minLength" : 1,
+            "type" : "string",
+            "description" : "Named SMI in MRO system."
+          },
+          "needDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "notes" : {
+            "maxLength" : 2000,
+            "minLength" : 0,
+            "type" : "string"
+          },
+          "pacingId" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "partId" : {
+            "maxLength" : 20,
+            "minLength" : 0,
+            "type" : "string"
+          },
+          "purchaseOrder" : {
+            "maxLength" : 10,
+            "minLength" : 0,
+            "type" : "string"
+          },
+          "startDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "subCategory" : {
+            "maxLength" : 20,
+            "minLength" : 0,
+            "type" : "string"
+          },
+          "uniqueId" : {
+            "maxLength" : 20,
+            "minLength" : 0,
+            "type" : "string"
+          },
+          "vendorInDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "vendorName" : {
+            "maxLength" : 30,
+            "minLength" : 0,
+            "type" : "string"
+          },
+          "vendorOutDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "wsInd" : {
+            "maxLength" : 20,
+            "minLength" : 0,
+            "type" : "string"
+          }
+        },
+        "required" : [ "category", "closeDate", "commitDate", "datReceivedDate", "datShipOutDate", "description", "engineId", "engineSN", "escItem", "esn", "eventId", "mroShopCode", "mroWorkOrder", "pacingId" ]
+      },
+      "MroPacingItemDeleteRequest" : {
+        "type" : "object",
+        "description" : "PacingItem delete request schema.",
+        "properties" : {
+          "category" : {
+            "maxLength" : 20,
+            "minLength" : 0,
+            "type" : "string"
+          },
+          "closeDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "commitDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "datReceivedDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "datShipOutDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "description" : {
+            "maxLength" : 50,
+            "minLength" : 0,
+            "type" : "string"
+          },
+          "dollarsSaved" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "engineId" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "engineSN" : {
+            "maxLength" : 10,
+            "minLength" : 1,
+            "type" : "string"
+          },
+          "escItem" : {
+            "type" : "boolean"
+          },
+          "esn" : {
+            "maxLength" : 20,
+            "minLength" : 1,
+            "type" : "string"
+          },
+          "eventId" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "holdDaysApproved" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "logDateTime" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "mroShopCode" : {
+            "maxLength" : 10,
+            "minLength" : 1,
+            "type" : "string"
+          },
+          "mroWorkOrder" : {
+            "maxLength" : 25,
+            "minLength" : 1,
+            "type" : "string",
+            "description" : "Named SMI in MRO system."
+          },
+          "needDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "notes" : {
+            "maxLength" : 2000,
+            "minLength" : 0,
+            "type" : "string"
+          },
+          "pacingId" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "partId" : {
+            "maxLength" : 20,
+            "minLength" : 0,
+            "type" : "string"
+          },
+          "purchaseOrder" : {
+            "maxLength" : 10,
+            "minLength" : 0,
+            "type" : "string"
+          },
+          "startDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "subCategory" : {
+            "maxLength" : 20,
+            "minLength" : 0,
+            "type" : "string"
+          },
+          "uniqueId" : {
+            "maxLength" : 20,
+            "minLength" : 0,
+            "type" : "string"
+          },
+          "vendorInDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "vendorName" : {
+            "maxLength" : 30,
+            "minLength" : 0,
+            "type" : "string"
+          },
+          "vendorOutDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "wsInd" : {
+            "maxLength" : 20,
+            "minLength" : 0,
+            "type" : "string"
+          }
+        },
+        "required" : [ "category", "closeDate", "commitDate", "datReceivedDate", "datShipOutDate", "description", "engineId", "engineSN", "escItem", "esn", "eventId", "mroShopCode", "mroWorkOrder", "pacingId" ]
       },
       "MroWorkOrderDeleteRequest" : {
         "type" : "object",
@@ -444,134 +842,6 @@
           }
         },
         "required" : [ "esn", "eventId", "mroShopCode", "mroWorkOrder" ]
-      },
-      "PacingItemDTO" : {
-        "type" : "object",
-        "description" : "PacingItem DTO schema.",
-        "properties" : {
-          "category" : {
-            "maxLength" : 20,
-            "minLength" : 0,
-            "type" : "string"
-          },
-          "closeDate" : {
-            "type" : "string",
-            "format" : "date"
-          },
-          "commitDate" : {
-            "type" : "string",
-            "format" : "date"
-          },
-          "createDateTime" : {
-            "type" : "string",
-            "format" : "date-time"
-          },
-          "datReceivedDate" : {
-            "type" : "string",
-            "format" : "date"
-          },
-          "datShipOutDate" : {
-            "type" : "string",
-            "format" : "date"
-          },
-          "description" : {
-            "maxLength" : 50,
-            "minLength" : 0,
-            "type" : "string"
-          },
-          "dollarsSaved" : {
-            "type" : "integer",
-            "format" : "int32"
-          },
-          "engineId" : {
-            "type" : "integer",
-            "format" : "int32"
-          },
-          "engineSN" : {
-            "maxLength" : 10,
-            "minLength" : 1,
-            "type" : "string"
-          },
-          "escItem" : {
-            "type" : "boolean"
-          },
-          "holdDaysApproved" : {
-            "type" : "integer",
-            "format" : "int32"
-          },
-          "needDate" : {
-            "type" : "string",
-            "format" : "date"
-          },
-          "notes" : {
-            "maxLength" : 2000,
-            "minLength" : 0,
-            "type" : "string"
-          },
-          "pacingId" : {
-            "type" : "integer",
-            "format" : "int32"
-          },
-          "partId" : {
-            "maxLength" : 20,
-            "minLength" : 0,
-            "type" : "string"
-          },
-          "purchaseOrder" : {
-            "maxLength" : 10,
-            "minLength" : 0,
-            "type" : "string"
-          },
-          "startDate" : {
-            "type" : "string",
-            "format" : "date"
-          },
-          "subcategory" : {
-            "maxLength" : 20,
-            "minLength" : 0,
-            "type" : "string"
-          },
-          "uniqueId" : {
-            "maxLength" : 20,
-            "minLength" : 0,
-            "type" : "string"
-          },
-          "vendorInDate" : {
-            "type" : "string",
-            "format" : "date"
-          },
-          "vendorName" : {
-            "maxLength" : 30,
-            "minLength" : 0,
-            "type" : "string"
-          },
-          "vendorOutDate" : {
-            "type" : "string",
-            "format" : "date"
-          },
-          "wsInd" : {
-            "maxLength" : 20,
-            "minLength" : 0,
-            "type" : "string"
-          }
-        },
-        "required" : [ "category", "closeDate", "commitDate", "datReceivedDate", "datShipOutDate", "description", "engineId", "engineSN", "escItem", "pacingId" ]
-      },
-      "PacingItemResponse" : {
-        "type" : "object",
-        "properties" : {
-          "engineId" : {
-            "type" : "integer",
-            "format" : "int32"
-          },
-          "pacingItems" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/PacingItemDTO"
-            }
-          }
-        },
-        "required" : [ "engineId", "pacingItems" ]
       }
     },
     "securitySchemes" : {
